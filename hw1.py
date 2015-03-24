@@ -5,9 +5,13 @@ from subprocess import call
 import ImageMath, ImageFilter, ImageDraw
 import math
 import re
+import cv2
 
 def takeShot(filename="image"):
-    call(["CommandCam", "/filename", filename+".bmp", "/quiet", "/delay", "1"])
+    cap = cv2.VideoCapture(0)
+    ret, frame = cap.read()
+    cv2.imwrite(filename + ".bmp",frame)
+    cap.release()
     return Image.open(filename+".bmp")
 
 def findPieces(image):
