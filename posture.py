@@ -1,12 +1,16 @@
-import sklearn
+from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import pickle
+import os
 
 
 class PostureRecognizer(object):
     """A class for hand posture recognition"""
-    def __init__(self, args):
+    def __init__(self):
         super(PostureRecognizer, self).__init__()
+        #self.feature_extractor = FeatureExtractor()
+        self.classifier = NearestNeighbors()
+        self.model = None
 
 
     def save(self, filename):
@@ -14,7 +18,11 @@ class PostureRecognizer(object):
 
         params filename: The output filename. 
         """
-        pickle.dump(self,filename)
+        if os.path.isfile(filename):
+            os.remove(filename)
+        outputfile = open(filename,'w')
+        pickle.dump(self,outputfile)
+        outputfile.close()
 
     @staticmethod
     def load(filename):
@@ -22,10 +30,14 @@ class PostureRecognizer(object):
 
         parmas  filename: The filename of the trained model
         return  model: A PostureRecognizer instance. """
-        return pickle.load(filename)
+        modelfile = open(filename, 'r')
+        self = pickle.load(modelfile)
+        modelfile.close()
+        return self
 
     def extract_features(self, image):
         """Extract the features from the image"""
+
 
     def train(self, train_data, train_label):
         """train on the training data and the labels. The train_data is a matrix of n-by-d, 
@@ -51,7 +63,8 @@ class PostureRecognizer(object):
         params image: A numpy.ndarray representing the input image taken with cv2.imread() in BGR mode. 
         params hand_mask: A numpy.ndarray with the same shape with the input image which indicate where the hand is. 
         return posture :An int which corresponds to one of the defined postures"""
-        pass
+
+        
 
 
 
