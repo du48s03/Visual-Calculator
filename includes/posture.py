@@ -40,8 +40,8 @@ class PostureRecognizer(object):
 
 
     def train(self, train_data, train_label):
-        """train on the training data and the labels. The train_data is a matrix of n-by-d, 
-        where each row is the features of one example. The train_label is a vector of n-by-1. 
+        """train on the training data and the labels. The train_data is a matrix of n x m x 3, 
+        where each row is the features of one example. The train_label is a vector of n x 1. 
 
         params train_data: the training data, a numpy.ndarray. 
         params train_label: the training labels, a numpy.ndarray. """

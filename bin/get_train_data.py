@@ -10,12 +10,17 @@ filename = sys.argv[1]
 print filename
 if os.path.isfile(filename):
     inputfile = open(filename, 'r')
-    data, labels = cPickle.load(filename)
-    inputfile = close()
+    old_data, old_labels = cPickle.load(inputfile)
+    inputfile.close()
+    # print "old_data = ", old_data.shape
+    # print "old_label = ", old_labels.shape
 else:
-    data, labels = [], []
+    old_data, old_labels = None, None
+
 
 cap = cv2.VideoCapture(0)
+
+datalist, labellist = [],[]
 
 while(True):
     # Capture frame-by-frame
@@ -30,8 +35,15 @@ while(True):
         #take one shot
         label = raw_input("What's the label of this picture?")
         if len(label) != 0:
-            data.append(frame)
-            labels.append(label)
+            datalist.append(frame)
+            labellist.append(label)
+
+if len(datalist) != 0:
+    newdata = np.array(datalist)
+    newlabels = np.array(labellist)
+
+    data = newdata if old_data is None else np.concatenate((old_data, newdata),axis=0)
+    labels = newlabels if old_labels is None else np.concatenate((old_labels, newlabels),axis=0)
 
 if os.path.isfile(filename):
     os.remove(filename)
