@@ -28,7 +28,7 @@ while(True):
 
     # Display the resulting frame
     cv2.imshow('frame',frame)
-    pressedkey = cv2.waitKey(1) & 0xFF
+    pressedkey = cv2.waitKey(20) & 0xFF
     if pressedkey == ord('q'):
         break
     elif pressedkey == ord('z'): 

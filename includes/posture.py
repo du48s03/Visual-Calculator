@@ -57,7 +57,7 @@ class PostureRecognizer(object):
         """
         pass
 
-    def posture_recognition(self, image, hand_mask):
+    def classify(self, image, hand_mask):
         """Classify the image into one of the defined postures.
         
         params image: A numpy.ndarray representing the input image taken with cv2.imread() in BGR mode. 
