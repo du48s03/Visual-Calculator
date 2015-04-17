@@ -2,6 +2,7 @@ from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import pickle
 import os
+import hand_detection
 
 
 class PostureRecognizer(object):
@@ -55,7 +56,7 @@ class PostureRecognizer(object):
         params image: A numpy.ndarray representing the input image taken with cv2.imread() in BGR mode. 
         return mask: A numpy.ndarray with the same shape with the input image. 
         """
-        pass
+        return hand_detection.hand_detection(self, image)
 
     def classify(self, image, hand_mask):
         """Classify the image into one of the defined postures.
