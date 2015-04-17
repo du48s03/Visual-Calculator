@@ -7,7 +7,7 @@ import cv2
 
 
 modelfilename = sys.argv[1]
-pos_recognizer = posture.PostureRecognizer()
+pos_recognizer = posture.PostureRecognizer.load(modelfilename)
 
 #Get the image and do the classification here
 cap = cv2.VideoCapture(0)

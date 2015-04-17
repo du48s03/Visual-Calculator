@@ -1,5 +1,4 @@
-from sklearn.neighbors import NearestNeighbors
-from sklearn import svm
+from sklearn import svm, neighbors
 import numpy as np
 import pickle
 import os
@@ -11,7 +10,7 @@ class PostureRecognizer(object):
     def __init__(self):
         super(PostureRecognizer, self).__init__()
         self.feature_extractor = fe.OrientationHistogramFeature()
-        self.classifier = NearestNeighbors()
+        self.classifier = neighbors.KNeighborsClassifier()
         self.model = None
 
 
@@ -49,12 +48,13 @@ class PostureRecognizer(object):
         params train_data: the training data, a numpy.ndarray. 
         params train_label: the training labels, a numpy.ndarray. """
         #Get the dimension of the feature first
+
         img = train_data[0,:,:,:]
         feature = self.extract_features(img)
-        features = np.zeros(train_data.shape[0], feature.size)
+        features = np.zeros((train_data.shape[0], feature.size))
         for i in xrange(train_data.shape[0]):
             img = train_data[i,:,:,:]
-            feature = self.extract_features(image)
+            feature = self.extract_features(img)
             label = train_label[i]
             features[i,:] = feature
         
