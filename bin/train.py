@@ -5,6 +5,7 @@ sys.path.insert(0, includespath)
 import posture
 import cv2
 
+print sys.argv
 datasetname = sys.argv[1]
 modelfilename = sys.argv[2]
 
