@@ -4,6 +4,7 @@ import pdb
 
 """Package for hand detection"""
 def hand_detection(im):
+   hc = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml') 
     x2 = im.shape[0] - 1
     y2 = im.shape[1]* 4 / 5
     x1 = 0
