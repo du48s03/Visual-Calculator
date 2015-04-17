@@ -17,8 +17,8 @@ class OrientationHistogramFeature(FeatureExtractor):
  
 
     def extract_features(self, image):
-        hand_mask = hd.hand_detection(image)
-        #hand_mask = image[2] > 40.0
+        #hand_mask = hd.hand_detection(image)
+        hand_mask = image[2] > 40.0
         masked = np.multiply(image, hand_mask)
         sobelx = cv2.Sobel(masked,cv2.CV_64F,1,0,ksize=5)
         sobely = cv2.Sobel(masked,cv2.CV_64F,0,1,ksize=5)
