@@ -100,9 +100,9 @@ def hand_detection(im):
     #cv2.imwrite(filename_out % 4, im2)
     # Skin detection using face information
     mask = skin_detection(im2, hc)
-    gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    th = cv2.threshold(gray,127,255,0)[1]
-    th = np.bool_(th)
+    #mask = np.bool_(mask)
+    mask = np.bool_(mask)
+    th = mask[:,:,0]
     # pdb.set_trace()
     #cv2.imwrite(filename_out % 1, im)
     #cv2.imwrite(filename_out % 2, np.uint8(mask)*255)
