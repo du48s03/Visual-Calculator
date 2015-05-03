@@ -1,6 +1,8 @@
 import numpy as np
 import hand_detection as hd
+import majoraxis
 import cv2
+
 
 class FeatureExtractor(object):
     """docstring for FeatureExtractor"""
@@ -27,9 +29,9 @@ class OrientationHistogramFeature(FeatureExtractor):
         hand_mask = np.concatenate((hand_mask,hand_mask,hand_mask),axis=2)
 
         masked = np.multiply(image, hand_mask)
-        cv2.imshow('masked', masked)
-        while cv2.waitKey(20) != ord('a'):
-            pass 
+        # cv2.imshow('masked', masked)
+        # while cv2.waitKey(20) != ord('a'):
+        #     pass 
         # exit()
 
         #masked = image[hand_mask]
@@ -47,7 +49,13 @@ class OrientationHistogramFeature(FeatureExtractor):
         #     ranges=[[-180.0,180.0],[0,256]])
         ang_hist = np.histogram(angles, bins=36,range=(-180.0,180.0))[0]
         #print type(ang_hist)
-        amp_hist = np.histogram(angles, bins=5)[0]
+        amp_hist = np.histogram(amplitudes, bins=5)[0]
+
+        #====Angular disposition=====
+        ang, b = majoraxis.majoraxis(hand_mask)
+        ###TODO: Do translation here
+
+
         return ang_hist
 
 
