@@ -5,6 +5,12 @@ import os
 import hand_detection
 import feature_extraction as fe
 
+## 1 = pointing finger
+## 2 = piece sign
+## 3 = palm
+## -1 = unknown
+
+
 class PostureRecognizer(object):
     """A class for hand posture recognition"""
     def __init__(self):
@@ -79,6 +85,15 @@ class PostureRecognizer(object):
         feature = self.extract_features(image)
         pred = self.classifier.predict(feature)
         return int(pred[0])
+
+
+def isTouching(frame, label, location):
+    """
+    Determin if the finger is touching the paper. 
+    """
+    #Find the fingertip of the shadow first. 
+    
+    pass
 
         
 
