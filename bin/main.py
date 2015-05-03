@@ -18,8 +18,9 @@ s2 = 0
 while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
+    frame2 = frame[frame.shape[0]/7:frame.shape[0],frame.shape[1]/8:frame.shape[1]*7/8]
     # Display the resulting frame
-    cv2.imshow('frame',frame)
+    cv2.imshow('frame',frame2)
     pressedkey = cv2.waitKey(20) & 0xFF
     if pressedkey == ord('q'):
         break
