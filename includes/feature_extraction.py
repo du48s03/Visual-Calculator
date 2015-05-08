@@ -56,7 +56,7 @@ class OrientationHistogramFeature(FeatureExtractor):
         ###TODO: Do translation here
 
 
-        return ang_hist
+        return ang_hist, hand_mask
 
 
 

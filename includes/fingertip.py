@@ -5,5 +5,6 @@ def find_fingertip(frame, label):
     @label int              label               An interger represting the label of the frame. 
                                                 Look at posture.py for more informations. 
     return (int, int)       loc                 The location of the fingertip of the longest finger.
+    return string           wrist_end    "up/down/left/right" representing the side of the wrist. 
     """ 
     pass
