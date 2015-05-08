@@ -82,12 +82,12 @@ class PostureRecognizer(object):
         params image: A numpy.ndarray representing the input image taken with cv2.imread() in BGR mode. 
         params hand_mask: A numpy.ndarray with the same shape with the input image which indicate where the hand is. 
         return posture :An int which corresponds to one of the defined postures"""
-        feature = self.extract_features(image)
+        feature, hand_mask = self.extract_features(image)
         pred = self.classifier.predict(feature)
-        return int(pred[0])
+        return int(pred[0]), hand_mask
 
 
-def isTouching(frame, label, location):
+def isTouching(frame, label, location, wrist_end):
     """
     Determin if the finger is touching the paper. 
     """

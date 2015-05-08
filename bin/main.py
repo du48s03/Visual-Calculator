@@ -24,9 +24,9 @@ while(True):
     #    break
 
     
-    label = pos_recognizer.classify(frame)
-    location = fingertip.find_fingertip(frame, label)
-    touching = posture.isTouching(frame, label, location)
+    label, hand_mask = pos_recognizer.classify(frame)
+    location, wrist_end = fingertip.find_fingertip(label, hand_mask)
+    touching = posture.isTouching(frame, label, location, wrist_end)
 
 
     #=======The grammar goes here=============
