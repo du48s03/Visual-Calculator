@@ -1,3 +1,8 @@
 *.aux
 *.log
 *.pyc
+report.pdf
+report.toc
+report.aux
+report.pyg
+
