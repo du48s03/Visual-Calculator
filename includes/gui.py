@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import posture
 
 #BGR
 palette = {
@@ -16,30 +17,33 @@ toolmap = {
     3:'eraser',
 }
 
+
 class GUI(object):
     """docstring for GUI"""
     def __init__(self):
         self.size = (480,640)
-        self.canvas = np.ones((self.size[0],self.size[1], 3L), dtype=np.int8)*255
-        self.cursur = Cursor(self.size[0]/2, self.size[1]/2)
+        self.canvas = np.ones((480,640, 3L),)*255
+        self.cursor = Cursor(self.size[0]/2, self.size[1]/2)
         self.color = palette["BLACK"]
         self.bgcolor = palette["WHITE"]
 
-        self.screen = self.get_screen()
+        self.drawing = False
+        self.erasing = False
+
+        self.screen = np.copy(self.canvas)
+        self.update_screen()
 
 
     def conv_coord(self, input_coord):
         """Convert the coordinate from the input to the output"""
         #TODO: convter the coordinate!!
-        pass
+        return input_coord
 
-    def drawpoint(self, location):
-        cood = self.conv_coord(location)
-        cv2.circle(self.canvas, cood, radius=5, color=self.color, thickness=-1)
+    def drawline(self, loc1, loc2):
+        cv2.line(self.canvas, loc1, loc2, color=self.color, thickness=5)
 
-    def erase(self, location):
-        cood = self.conv_coord(location)
-        cv2.circle(self.canvas, cood, radius=5, color=self.bgcolor, thickness=-1)
+    def eraseline(self, loc1, loc2):
+        cv2.line(self.canvas, loc1, loc2, color=self.bgcolor, thickness=5)
 
     def setcolor(self, color_name):
         """color_name is a string"""
@@ -54,14 +58,33 @@ class GUI(object):
 
     def update_screen(self):
         """update the secreen with canvas and cursor"""
-        self.screen = self.canvas
-        ###TODO: Paint the cursor here!!
-        pass
+        self.screen = np.copy(self.canvas)
+        cursor_loc_i = self.cursor.location[0]
+        cursor_loc_j = self.cursor.location[1]
+        cv2.line(self.screen, (cursor_loc_i,cursor_loc_j-5), (cursor_loc_i,cursor_loc_j+5), (0,0,0), 2)
+        cv2.line(self.screen, (cursor_loc_i-5,cursor_loc_j), (cursor_loc_i+5,cursor_loc_j), (0,0,0), 2)
 
     def get_screen(self):
         """update the screen with canvas and cursor, then return the screen"""
         self.update_screen()
         return self.screen
+
+    def handle_input(self, label, location, isTouching):
+        """The method to handle the signals from the device"""
+        cvt_coord = self.conv_coord(location)
+        #paint first
+        if self.drawing and label == posture.poses['POINTING'] and isTouching:
+            self.drawline(self.cursor.location, cvt_coord)
+        if self.erasing and label == posture.poses['PALM'] and isTouching:
+            self.eraseline(self.cursor.location, cvt_coord)
+
+        #update state
+        self.drawing = label == posture.poses['POINTING'] and isTouching
+        self.erasing = label == posture.poses['PALM'] and isTouching
+        self.setcursor(cvt_coord)
+
+        self.update_screen()
+
 
 class Cursor(object):
     """docstring for Cursor"""
