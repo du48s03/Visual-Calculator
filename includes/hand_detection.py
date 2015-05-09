@@ -16,11 +16,11 @@ def hand_detection(image):
     Red = RGB[2]
     mask = Red - Blue
     rg = Red - Green
-    mask[mask < 20] = 0
-    mask[rg < 20] = 0
+    mask[mask < 40] = 0
+    mask[rg < 40] = 0
     mask[mask > 0] = 255
     mask[Blue > Red] = 0
     mask[Green > Red] = 0
-    mask = cv2.medianBlur(mask,5)
+    mask = cv2.medianBlur(mask,11)
     mask = np.bool_(mask)
     return mask
