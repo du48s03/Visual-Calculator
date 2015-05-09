@@ -1,3 +1,5 @@
+import numpy as np
+import math
 def majoraxis(mask):
     """
     Find the major axis of the hand. The input image is a binary image of the hand mask.
