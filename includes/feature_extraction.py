@@ -2,7 +2,7 @@ import numpy as np
 import hand_detection as hd
 import majoraxis
 import cv2
-
+from numpy import pi
 
 class FeatureExtractor(object):
     """docstring for FeatureExtractor"""
@@ -22,13 +22,13 @@ class OrientationHistogramFeature(FeatureExtractor):
         hand_mask = hd.hand_detection(image)
         #hand_mask = image[2] > 40.0
         # hand_mask_show = hand_mask.astype(np.int)*255*255
-        cv2.imshow('hand_mask', hand_mask.astype(np.int)*255*255)
-        while cv2.waitKey(20) != ord('a'):
-            pass 
-        hand_mask = np.reshape(hand_mask, hand_mask.shape+(1,) )
-        hand_mask = np.concatenate((hand_mask,hand_mask,hand_mask),axis=2)
+        # cv2.imshow('hand_mask', hand_mask.astype(np.int)*255*255)
+        # while cv2.waitKey(20) != ord('a'):
+        #     pass 
+        hand_mask_tmp = np.reshape(hand_mask, hand_mask.shape+(1,) )
+        hand_mask_tmp = np.concatenate((hand_mask_tmp,hand_mask_tmp,hand_mask_tmp),axis=2)
 
-        masked = np.multiply(image, hand_mask)
+        masked = np.multiply(image, hand_mask_tmp)
         # cv2.imshow('masked', masked)
         # while cv2.waitKey(20) != ord('a'):
         #     pass 
@@ -47,14 +47,16 @@ class OrientationHistogramFeature(FeatureExtractor):
         #     histSize=[36,5],\
         #     # ranges=[[-180.0,180.0],[int(np.min(amplitudes)), int(np.max(amplitudes))]])
         #     ranges=[[-180.0,180.0],[0,256]])
-        ang_hist = np.histogram(angles, bins=36,range=(-180.0,180.0))[0]
+        n_bins = 36
+        ang_hist, bins = np.histogram(angles, bins=n_bins,range=(-180.0,180.0))
         #print type(ang_hist)
         amp_hist = np.histogram(amplitudes, bins=5)[0]
 
         #====Angular disposition=====
-        ang, b = majoraxis.majoraxis(hand_mask)
-        ###TODO: Do translation here
-
+        ang, cx, cy = majoraxis.majoraxis(hand_mask)
+        ang = ang/pi*180
+        majorangle = np.where(np.histogram([ang], bins=n_bins,range=(-180,180))[0] != 0)[0][0]
+        ang_hist = np.roll(ang_hist, (n_bins - majorangle)%n_bins )
 
         return ang_hist, hand_mask
 

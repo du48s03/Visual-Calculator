@@ -4,11 +4,20 @@ import pickle
 import os
 import hand_detection
 import feature_extraction as fe
+import cv2
+from collections import deque
 
+poses = {
+'POINTING':'1',
+'DBFINGER':'2',
+'PALM':'3',
+'UNKNOWN':'-1',
+}
 ## 1 = pointing finger
 ## 2 = piece sign
 ## 3 = palm
 ## -1 = unknown
+
 
 
 class PostureRecognizer(object):
@@ -56,12 +65,12 @@ class PostureRecognizer(object):
         #Get the dimension of the feature first
 
         img = train_data[0,:,:,:]
-        feature = self.extract_features(img)
+        feature, hand_mask = self.extract_features(img)
         features = np.zeros((train_data.shape[0], feature.size))
         for i in xrange(train_data.shape[0]):
-            img = train_data[i,:,:,:]
-            feature = self.extract_features(img)
             label = train_label[i]
+            img = train_data[i,:,:,:]
+            feature,hand_mask = self.extract_features(img)
             features[i,:] = feature
         
         self.classifier.fit(features,train_label)
@@ -81,19 +90,58 @@ class PostureRecognizer(object):
         
         params image: A numpy.ndarray representing the input image taken with cv2.imread() in BGR mode. 
         params hand_mask: A numpy.ndarray with the same shape with the input image which indicate where the hand is. 
-        return posture :An int which corresponds to one of the defined postures"""
+        return posture :A string which corresponds to one of the defined postures, or -1 if unknown"""
         feature, hand_mask = self.extract_features(image)
         pred = self.classifier.predict(feature)
-        return int(pred[0]), hand_mask
+        #TODO return -1 if dist is too large
+        if pred not in poses.values():
+            return poses["UNKNOWN"], hand_mask
+        return pred[0], hand_mask
 
+def find_shadow_of(img, location):
+    img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    mask_H = (img[:,:,0] > 0.29 * 180) * (img[:,:,0] < 0.57*180)
+    mask_S = (img[:,:,1] > 0.19 *255) * (img[:,:,1] < 0.30*255)
+    mask_V = (img[:,:,2] > 0.14*255) * (img[:,:,2] < 0.23*255)
+    mask = mask_H*mask_S*mask_V
+    binimg = np.rollaxis(np.array([mask, mask, mask]), 0,3).astype(np.uint8)*255
+    binimg[location[0]:,:,:] = False
+    binimg[:,location[1]+40:,:] = False
+    # for i in xrange(binimg.shape[0]):
+    #     for j in xrange(binimg.shape[1]):
+    #         if i>location[0] or j < location[1] or j > location[1] + 40:
+    #             binimg[i,j]= False
+    return binimg
+
+def shadow_fingertip(shadow_mask, wrist_end):
+    shadow_finger = None
+    shadow_indices_i, shadow_indices_j = np.where(shadow_mask.all(axis=2))
+    if len(shadow_indices_i) ==0:
+        return shadow_finger
+
+    if wrist_end == 'up':
+        finger_ind = shadow_indices_i.argmax()
+    elif wrist_end == 'down':
+        finger_ind = shadow_indices_i.argmin()
+    elif wrist_end == 'left':
+        finger_ind = shadow_indices_j.argmax()
+    elif wrist_end == 'right':
+        finger_ind = shadow_indices_j.argmin()
+    else:
+        raise ValueError('Unknown wrist_end')
+    shadow_finger = (shadow_indices_i[finger_ind], shadow_indices_j[finger_ind])
+    return shadow_finger
 
 def isTouching(frame, label, location, wrist_end):
     """
     Determin if the finger is touching the paper. 
     """
-    #Find the fingertip of the shadow first. 
-    
-    pass
+    shadow_mask = find_shadow_of(frame,location)
+    shadow_ft = shadow_fingertip(shadow_mask, wrist_end)
+    if shadow_ft is None:
+        return False
+
+    return (location[0]-shadow_ft[0])**2 + (location[1]-shadow_ft[1])**2 < 100
 
         
 
