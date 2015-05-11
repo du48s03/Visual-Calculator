@@ -6,7 +6,7 @@ import time
 import math
 import majoraxis
 
-def detectwrist(mask,theta,c_x,c_y):
+def detectwrist(mask,theta,c_xo,c_yo):
     (x,y) = mask.nonzero()
     if len(x) == 0:
         return mask
@@ -29,8 +29,7 @@ def detectwrist(mask,theta,c_x,c_y):
         y_2 = sum(mask[l,:])
     # if the condition is not good, simply half it
     if x_2 <= x_min + 30:
-        mask[x_min:x_min+int(x_max-x_min)/2,:] = 0
-        return mask
+        mask[x_min:x_min+int(2*(x_max-x_min)/3),:] = 0
     # use the method from paper[5].
     else:
         for i in range(x_min,x_2-30):
@@ -41,7 +40,7 @@ def detectwrist(mask,theta,c_x,c_y):
     rows,cols = mask.shape[:2]
     M = cv2.getRotationMatrix2D((cols/2,rows/2),(theta*180/math.pi),1)
     dst = cv2.warpAffine(mask,M,(cols,rows))
-    M = np.float32([[1,0,-cols/2+c_y],[0,1,-rows/2 +c_x]])
+    M = np.float32([[1,0,-cols/2+c_yo],[0,1,-rows/2 +c_xo]])
     dst = cv2.warpAffine(dst,M,(cols,rows))
     return dst
 
@@ -86,4 +85,5 @@ def hand_detection(image):
     rmask = rotateim(mask,theta,c_x,c_y)
     handmask = detectwrist(rmask,theta,c_x,c_y)
     handmask = np.bool_(handmask)
+    image[handmask==False] = 0
     return handmask, theta, mask
