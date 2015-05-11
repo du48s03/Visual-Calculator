@@ -85,5 +85,6 @@ def hand_detection(image):
     # rotate image and detect wrist
     rmask = rotateim(mask,theta,c_x,c_y)
     handmask = detectwrist(rmask,theta,c_x,c_y)
+    #handmask = mask
     handmask = np.bool_(handmask)
     return handmask, theta, mask
