@@ -48,7 +48,7 @@ class GUI(object):
         di2 = - di1*scalei #Up side down
         dj2 = - dj1*scalej 
 
-        return (center2[0]+di2, center2[1]+dj2)
+        return (int(center2[0]+di2), int(center2[1]+dj2))
 
     def drawline(self, loc1, loc2):
         cv2.line(self.canvas, loc1, loc2, color=self.color, thickness=5)

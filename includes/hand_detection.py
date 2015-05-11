@@ -38,10 +38,10 @@ def detectwrist(mask,theta,c_x,c_y):
         mask[x_min:x_min+wrist,:] = 0
     rows,cols = mask.shape[:2]
     M = cv2.getRotationMatrix2D((cols/2,rows/2),(theta*180/math.pi),1)
-    dst = cv2.warpAffine(dst,M,(cols,rows))
+    dst = cv2.warpAffine(mask,M,(cols,rows))
     M = np.float32([[1,0,-cols/2+c_y],[0,1,-rows/2 +c_x]])
-    dst = cv2.warpAffine(im,M,(cols,rows))
-    return mask
+    dst = cv2.warpAffine(dst,M,(cols,rows))
+    return dst
 
 # in order to detect wrist correctly, rotate image before detecting wrist
 def rotateim(im,theta,c_x,c_y):
