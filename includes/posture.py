@@ -138,6 +138,12 @@ def isTouching(frame, label, location, wrist_end):
     """
     shadow_mask = find_shadow_of(frame,location)
     shadow_ft = shadow_fingertip(shadow_mask, wrist_end)
+    frame_tmp = np.copy(frame)
+    frame_tmp[shadow_mask==False]=0
+    cv2.circle(frame_tmp,shadow_ft ,3,(0,0,255),-1)
+    cv2.imshow('shadow_fingertip', frame_tmp)
+    cv2.waitKey(0)
+    
     if shadow_ft is None:
         return False
 

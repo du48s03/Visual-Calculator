@@ -10,6 +10,12 @@ import fingertip
 import hand_detection as hd
 import numpy as np
 
+def mouse_callback(event,x,y,flags,param):
+    i,j = (y-1,x-1)
+    global counter
+    if event == cv2.EVENT_LBUTTONUP:
+        print x,y
+
 
 def main():
     modelfilename = sys.argv[1]
@@ -28,8 +34,12 @@ def main():
         print "label = ", label
 
         
-        cv2.imshow('debug', frame[hand_mask.reshape(hand_mask.shape+(1,))] )
-        # cv2.imshow('debug', np.rollaxis(np.array([frame[:,:,0]*hand_mask, frame[:,:,1]*hand_mask,frame[:,:,2]*hand_mask]),0,2) )
+        #cv2.imshow('debug', frame[)] )
+        frame_tmp = np.copy(frame)
+        frame_tmp[hand_mask==False] = 0
+        cv2.namedWindow('debug')
+        cv2.setMouseCallback('debug',mouse_callback)
+        cv2.imshow('debug', frame_tmp)
 
         if(label == posture.poses["UNKNOWN"]):
             continue
@@ -45,8 +55,9 @@ def main():
         ui.handle_input(label, location, touching)
 
         cv2.imshow('Canvas', ui.get_screen())
-        pressedKey = cv2.waitKey(60)
-
+        pressedKey = cv2.waitKey(0)
+        if pressedKey == 27:
+            break
 
 if __name__ == '__main__':
     main()
