@@ -85,6 +85,9 @@ class GUI(object):
 
         self.update_screen()
 
+    def save_canvas(self,filename):
+        """ save canvas """
+        cv2.imwrite(filename,self.canvas)
 
 class Cursor(object):
     """docstring for Cursor"""
