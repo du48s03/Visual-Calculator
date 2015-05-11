@@ -87,6 +87,7 @@ class GUI(object):
 
     def save_canvas(self,filename):
         """ save canvas """
+        print 'save images'
         cv2.imwrite(filename,self.canvas)
 
     def draw_sample(self,image):

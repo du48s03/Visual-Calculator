@@ -29,6 +29,7 @@ def evaluation(filename = 'test.png',image = None):
     cv2.setMouseCallback('gui', mouse_cb)
     start = 0
     end = 0
+    print filename
     while(True):
         cv2.imshow('gui',ui.get_screen())
         pressedKey = cv2.waitKey(60)
@@ -36,9 +37,12 @@ def evaluation(filename = 'test.png',image = None):
         if pressedKey == ord('r'):
             ui.draw_sample(image)
             start = time.time()
+            print 'r'
         if pressedKey == ord('q'):
             end = time.time()
             ui.save_canvas(filename)
+            print 'q'
+            cv2.destroyAllWindows()
             return ui.canvas, end - start
         if pressedKey & 0xFF == 27:
             break

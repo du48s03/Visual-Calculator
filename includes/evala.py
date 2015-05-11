@@ -149,7 +149,7 @@ def exp_line_m(username):
         ## for debuging
         im2 = cv2.imread('../test.png')
         cv2.line(im2,(10,10),(400,400),(255,0,0),1)
-        filename = 'experiments/line_'+username+'_'+str(i) + '_m.png'
+        filename = '../experiments/line_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
         ## for debugging
         c = evalline(im,start,end)
@@ -168,7 +168,7 @@ def exp_points_m(username):
         cv2.circle(im2,(350,350),3,(255,0,0),1)
         cv2.circle(im2,(40,350),3,(255,0,0),1)
         cv2.circle(im2,(350,40),3,(255,0,0),1)
-        filename = 'experiments/line_'+username+'_'+str(i) + '_m.png'
+        filename = '../experiments/line_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
         c = evalpoints(im,points)
         csvWriter.writerow([username,i,time,c,'mouse'])
