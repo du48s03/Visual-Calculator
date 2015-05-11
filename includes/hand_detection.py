@@ -6,7 +6,7 @@ import time
 import math
 import majoraxis
 
-def detectwrist(mask):
+def detectwrist(mask,theta,c_x,c_y):
     (x,y) = mask.nonzero()
     # find the minimum / maximum x / y
     x_min = min(x)
@@ -82,6 +82,6 @@ def hand_detection(image):
     [theta,c_x,c_y] = majoraxis.majoraxis(mask)
     # rotate image and detect wrist
     rmask = rotateim(mask,theta,c_x,c_y)
-    handmask = detectwrist(rmask)
+    handmask = detectwrist(rmask,theta,c_x,c_y)
     handmask = np.bool_(handmask)
     return handmask, theta, mask
