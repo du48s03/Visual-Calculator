@@ -9,24 +9,19 @@ import hand_detection
 import fingertip
 import hand_detection as hd
 
-def cutframe(frame):
-    return frame[:380]
 
 def main():
     modelfilename = sys.argv[1]
     pos_recognizer = posture.PostureRecognizer.load(modelfilename)
     ui = gui.GUI()
     #Get the image and do the classification here
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
 
     while(True):
         # Capture frame-by-frame
         ret, frame = cap.read()
-        frame = cutframe(frame)
         # Display the input stream only for debug purposes
         cv2.imshow('input',frame)
-
-        
         
         label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
         if(label == posture.poses["UNKNOWN"]):
