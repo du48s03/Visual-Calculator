@@ -98,24 +98,32 @@ class PostureRecognizer(object):
             return poses["UNKNOWN"], hand_mask, theta, skin_mask
         return pred[0], hand_mask, theta, skin_mask
 
-def find_shadow_of(img, location):
+def find_shadow_of(img, location, hand_mask):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    mask_H = (img[:,:,0] > 0.29 * 180) * (img[:,:,0] < 0.57*180)
-    mask_S = (img[:,:,1] > 0.19 *255) * (img[:,:,1] < 0.30*255)
-    mask_V = (img[:,:,2] > 0.14*255) * (img[:,:,2] < 0.23*255)
-    mask = mask_H*mask_S*mask_V
-    binimg = np.rollaxis(np.array([mask, mask, mask]), 0,3).astype(np.uint8)*255
-    binimg[location[0]:,:,:] = False
-    binimg[:,location[1]+40:,:] = False
+    mask_B = (img[:,:,0] > 0.21 * 180) * (img[:,:,0] < 0.67*180)
+    mask_G = (img[:,:,1] > 0.1 *255) * (img[:,:,1] < 0.34*255)
+    mask_R = (img[:,:,2] > 0 *255) * (img[:,:,2] < 0.42*255)
+    
+    # mask_H = (img_hsv[:,:,0] > 0.21 * 180) * (img_hsv[:,:,0] < gr*180)
+    # mask_S = (img_hsv[:,:,1] > gray_val * 180) * (img_hsv[:,:,1] < 1*180)
+    mask_V = (img_hsv[:,:,2] > 0.0 * 180) * (img_hsv[:,:,2] < 0.56*180)
+    mask_nothand = hand_mask == False
+
+    mask = mask_R*mask_G*mask_B*mask_V*mask_nothand
+    mask[location[0]:,:] = False
+    mask[:,location[1]+40:] = False
+
+
     # for i in xrange(binimg.shape[0]):
     #     for j in xrange(binimg.shape[1]):
     #         if i>location[0] or j < location[1] or j > location[1] + 40:
     #             binimg[i,j]= False
-    return binimg
+
+    return mask
 
 def shadow_fingertip(shadow_mask, wrist_end):
     shadow_finger = None
-    shadow_indices_i, shadow_indices_j = np.where(shadow_mask.all(axis=2))
+    shadow_indices_i, shadow_indices_j = np.where(shadow_mask)
     if len(shadow_indices_i) ==0:
         return shadow_finger
 
@@ -132,18 +140,22 @@ def shadow_fingertip(shadow_mask, wrist_end):
     shadow_finger = (shadow_indices_i[finger_ind], shadow_indices_j[finger_ind])
     return shadow_finger
 
-def isTouching(frame, label, location, wrist_end):
+def isTouching(frame, label, location, wrist_end, hand_mask):
     """
     Determin if the finger is touching the paper. 
     """
-    shadow_mask = find_shadow_of(frame,location)
+    shadow_mask = find_shadow_of(frame,location, hand_mask)
     shadow_ft = shadow_fingertip(shadow_mask, wrist_end)
+    # frame_tmp = np.copy(frame)
+    # frame_tmp[shadow_mask==False]=0
+    # cv2.circle(frame_tmp,shadow_ft ,3,(0,0,255),-1)
+    # cv2.imshow('shadow_fingertip', np.multiply(frame, shadow_mask))
     frame_tmp = np.copy(frame)
     frame_tmp[shadow_mask==False]=0
     cv2.circle(frame_tmp,shadow_ft ,3,(0,0,255),-1)
-    cv2.imshow('shadow_fingertip', frame_tmp)
-    cv2.waitKey(0)
-    
+    cv2.imshow('shadow', frame_tmp)
+
+    print shadow_ft
     if shadow_ft is None:
         return False
 

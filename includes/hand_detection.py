@@ -86,5 +86,5 @@ def hand_detection(image):
     handmask = detectwrist(rmask,theta,c_x,c_y)
     #handmask = mask
     handmask = np.bool_(handmask)
-    image[handmask==False] = 0
+    # image[handmask==False] = 0
     return handmask, theta, mask

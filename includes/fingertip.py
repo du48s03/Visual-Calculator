@@ -27,7 +27,7 @@ def find_fingertip(label, mask):
     bottom = (sum(mask[x_max,:])/255)
     left = (sum(mask[:,y_min])/255)
     right = (sum(mask[:,y_max])/255)
-    #print up,bottom,left,right
+    print up,bottom,left,right
     wrist = max(up,bottom,left,right)
     wrist_ch = ''
     # mask wrist side

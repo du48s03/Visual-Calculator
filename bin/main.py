@@ -14,7 +14,7 @@ def mouse_callback(event,x,y,flags,param):
     i,j = (y-1,x-1)
     global counter
     if event == cv2.EVENT_LBUTTONUP:
-        print x,y
+        print i,j
 
 
 def main():
@@ -48,7 +48,7 @@ def main():
             continue
         print "location= ", location
         print "wrist_end = ", wrist_end
-        touching = posture.isTouching(frame, label, location, wrist_end)
+        touching = posture.isTouching(frame, label, location, wrist_end, hand_mask)
         print "touching=" ,touching
 
         #=======The grammar goes here=============
