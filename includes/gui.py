@@ -111,6 +111,25 @@ class GUI(object):
         """ draw sample image on canvas """
         self.canvas = image
 
+    def handle_input_m(self, label, location, isTouching):
+        """The method to handle the signals from the mouse"""
+        cvt_coord = location
+        #paint first
+        if self.drawing and label == posture.poses['POINTING'] and isTouching:
+            self.drawline(self.cursor.location, cvt_coord)
+        if self.erasing and label == posture.poses['PALM'] and isTouching:
+            self.eraseline(self.cursor.location, cvt_coord)
+        #Finally, update state
+        self.drawing  = label == posture.poses['POINTING'] and isTouching
+        self.erasing  = label == posture.poses['PALM'] and isTouching
+        self.setcursor_m(cvt_coord)
+
+        self.update_screen()
+
+    def setcursor_m(self, location):
+        self.cursor.location = location
+
+
 class Cursor(object):
     """docstring for Cursor"""
     def __init__(self, init_i, init_j):

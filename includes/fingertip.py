@@ -11,7 +11,7 @@ def find_fingertip(label, mask):
                                                 Look at posture.py for more informations. 
     return (int, int)       loc                 The location of the fingertip of the longest finger.
     return string           wrist_end    "up/down/left/right" representing the side of the wrist. 
-    """ 
+    """
     (x,y) = mask.nonzero()
     # find the minimum / maximum x / y
     x_min = min(x)
@@ -21,7 +21,6 @@ def find_fingertip(label, mask):
     # find the center
     c_x = x.mean(axis=0)
     c_y = y.mean(axis=0)
-    mask[:c_x,:] = 0
     # find the most largest edge (= wrist)
     up = (sum(mask[x_min,:])/255)
     bottom = (sum(mask[x_max,:])/255)
@@ -32,18 +31,15 @@ def find_fingertip(label, mask):
     wrist_ch = ''
     # mask wrist side
     if wrist == up:
-        mask[:c_x,:] = 0
         wrist_ch = 'up'
     elif wrist == bottom:
-        mask[c_x:,:] = 0
         wrist_ch = 'down'
     elif wrist == left:
-        mask[:,:c_y] = 0
         wrist_ch = 'left'
     elif wrist == right:
-        mask[:,c_y:] = 0
         wrist_ch = 'right'
     # find the most furthest point (= finger)
+    mask[:c_x,:] = 0
     (x,y) = mask.nonzero()
     z = (x - c_x)**2 + (y - c_y)**2
     if len(z) > 0:

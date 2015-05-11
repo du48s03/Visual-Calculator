@@ -24,7 +24,7 @@ def mouse_cb(event,x,y,flags,param):
     if(event == cv2.EVENT_LBUTTONUP):
         isTouching = False
 
-    ui.handle_input(mode, (x,y), isTouching)
+    ui.handle_input_m(mode, (x,y), isTouching)
 
 cv2.namedWindow('gui')
 cv2.setMouseCallback('gui', mouse_cb)
