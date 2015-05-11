@@ -65,12 +65,12 @@ class PostureRecognizer(object):
         #Get the dimension of the feature first
 
         img = train_data[0,:,:,:]
-        feature, hand_mask = self.extract_features(img)
+        feature= self.extract_features(img)[0]
         features = np.zeros((train_data.shape[0], feature.size))
         for i in xrange(train_data.shape[0]):
             label = train_label[i]
             img = train_data[i,:,:,:]
-            feature,hand_mask = self.extract_features(img)
+            feature= self.extract_features(img)[0]
             features[i,:] = feature
         
         self.classifier.fit(features,train_label)
@@ -91,12 +91,12 @@ class PostureRecognizer(object):
         params image: A numpy.ndarray representing the input image taken with cv2.imread() in BGR mode. 
         params hand_mask: A numpy.ndarray with the same shape with the input image which indicate where the hand is. 
         return posture :A string which corresponds to one of the defined postures, or -1 if unknown"""
-        feature, hand_mask = self.extract_features(image)
+        feature, hand_mask, theta, skin_mask = self.extract_features(image)
         pred = self.classifier.predict(feature)
         #TODO return -1 if dist is too large
         if pred not in poses.values():
-            return poses["UNKNOWN"], hand_mask
-        return pred[0], hand_mask
+            return poses["UNKNOWN"], hand_mask, theta, skin_mask
+        return pred[0], hand_mask, theta, skin_mask
 
 def find_shadow_of(img, location):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)

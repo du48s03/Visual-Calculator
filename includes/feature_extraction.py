@@ -19,7 +19,7 @@ class OrientationHistogramFeature(FeatureExtractor):
  
 
     def extract_features(self, image):
-        hand_mask = hd.hand_detection(image)
+        hand_mask, ang, skin_mask= hd.hand_detection(image)
         #hand_mask = image[2] > 40.0
         # hand_mask_show = hand_mask.astype(np.int)*255*255
         # cv2.imshow('hand_mask', hand_mask.astype(np.int)*255*255)
@@ -53,12 +53,12 @@ class OrientationHistogramFeature(FeatureExtractor):
         amp_hist = np.histogram(amplitudes, bins=5)[0]
 
         #====Angular disposition=====
-        ang, cx, cy = majoraxis.majoraxis(hand_mask)
+        # ang, cx, cy = majoraxis.majoraxis(hand_mask)
         ang = ang/pi*180
         majorangle = np.where(np.histogram([ang], bins=n_bins,range=(-180,180))[0] != 0)[0][0]
         ang_hist = np.roll(ang_hist, (n_bins - majorangle)%n_bins )
 
-        return ang_hist, hand_mask
+        return ang_hist, hand_mask, ang, skin_mask
 
 
 

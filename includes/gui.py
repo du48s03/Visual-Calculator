@@ -36,8 +36,19 @@ class GUI(object):
 
     def conv_coord(self, input_coord):
         """Convert the coordinate from the input to the output"""
-        #TODO: convter the coordinate!!
-        return input_coord
+        i,j = input_coord
+        center1 = (261.5,322)
+        center2 = (self.size[0]/2.0, self.size[1]/2.0)
+        di1 = i-center1[0]
+        dj1 = j-center1[1]
+
+        scalei = center2[0]*2/222.0
+        scalej = center2[1]*2/151.0
+
+        di2 = - di1*scalei #Up side down
+        dj2 = - dj1*scalej 
+
+        return (center2[0]+di2, center2[1]+dj2)
 
     def drawline(self, loc1, loc2):
         cv2.line(self.canvas, loc1, loc2, color=self.color, thickness=5)
@@ -78,9 +89,15 @@ class GUI(object):
         if self.erasing and label == posture.poses['PALM'] and isTouching:
             self.eraseline(self.cursor.location, cvt_coord)
 
-        #update state
-        self.drawing = label == posture.poses['POINTING'] and isTouching
-        self.erasing = label == posture.poses['PALM'] and isTouching
+        #Color selection
+        # if not self.drawing and isTouching and label == posture.poses['POINTING']:#Finger down event
+
+        # if not self.erasing and isTouching and label == posture.poses['PALM']:#Finger down event        
+
+
+        #Finally, update state
+        self.drawing  = label == posture.poses['POINTING'] and isTouching
+        self.erasing  = label == posture.poses['PALM'] and isTouching
         self.setcursor(cvt_coord)
 
         self.update_screen()

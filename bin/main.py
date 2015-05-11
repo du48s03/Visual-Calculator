@@ -7,6 +7,7 @@ import cv2
 import gui
 import hand_detection
 import fingertip
+import hand_detection as hd
 
 def cutframe(frame):
     return frame[:380]
@@ -26,8 +27,9 @@ def main():
         cv2.imshow('input',frame)
 
         
-        label, hand_mask = pos_recognizer.classify(frame)
-        location, wrist_end = fingertip.find_fingertip(label, hand_mask)
+        
+        label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
+        location, wrist_end = fingertip.find_fingertip(label, skin_mask)
         touching = posture.isTouching(frame, label, location, wrist_end)
 
         #=======The grammar goes here=============
@@ -35,9 +37,6 @@ def main():
 
         cv2.imshow('Canvas', ui.get_screen())
         pressedKey = cv2.waitKey(60)
-        if pressedKey == ord('q'):
-            
-
 
 
 if __name__ == '__main__':
