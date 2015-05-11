@@ -47,7 +47,7 @@ def find_fingertip(label, mask):
     (x,y) = mask.nonzero()
     z = (x - c_x)**2 + (y - c_y)**2
     if len(z) > 0:
-        return x[z.argmax(0)],y[z.argmax(0)],wrist_ch
+        return (x[z.argmax(0)],y[z.argmax(0)]),wrist_ch
     else:
         return None, None, None
 
