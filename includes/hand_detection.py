@@ -36,6 +36,11 @@ def detectwrist(mask):
             slopes.append(slope)
         wrist = slopes.index(max(slopes))
         mask[x_min:x_min+wrist,:] = 0
+    rows,cols = mask.shape[:2]
+    M = cv2.getRotationMatrix2D((cols/2,rows/2),(theta*180/math.pi),1)
+    dst = cv2.warpAffine(dst,M,(cols,rows))
+    M = np.float32([[1,0,-cols/2+c_y],[0,1,-rows/2 +c_x]])
+    dst = cv2.warpAffine(im,M,(cols,rows))
     return mask
 
 # in order to detect wrist correctly, rotate image before detecting wrist
@@ -66,9 +71,6 @@ def skin_color(image):
     mask[Green > Red] = 0
     mask[V > 0.73*255] = 0
     mask[S < 0.3*255] = 0
-    # desk zone
-    #mask[:,:100] = 0
-    #mask[376:,:]=0
     # erase spot noise
     mask = cv2.medianBlur(mask,15)
     return mask
@@ -78,12 +80,8 @@ def hand_detection(image):
     mask = skin_color(image)
     # detect the major axis angle
     [theta,c_x,c_y] = majoraxis.majoraxis(mask)
-    image[mask==False] = 0
-    cv2.imshow('test',image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
     # rotate image and detect wrist
-    mask = rotateim(mask,theta,c_x,c_y)
-    mask = detectwrist(mask)
-    mask = np.bool_(mask)
-    return mask
+    rmask = rotateim(mask,theta,c_x,c_y)
+    handmask = detectwrist(rmask)
+    handmask = np.bool_(handmask)
+    return handmask, theta, mask

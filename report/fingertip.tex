@@ -1,2 +1,27 @@
 \subsection{Fingertip detection}
-We have to detect hand in order to 
+In order to draw points using finger information, we have to detect the location of the fingertip.
+If the gesture is 'draw (one finger)', we detect the fingertip of the index finger. 
+If the gesture is 'erase (three fingers)' or 'move (two fingers)', we detect the fingertip of the middle finger. \par
+We assume the fingertip is the further point from the center of the mass and also not the wrist side.
+Our environment allows us to assume the wrist side is always top of the image, we simply find the furthest point from the center of the mass among the bottom half of the mask.
+This function is implemented in fingertip.py. 
+
+Fig. \ref{fig:finger} shows the results of the finger tip detection.
+This method detects the finger tip correctly when the gesture is one finger or two fingers.
+When the gesture is three fingers, the method sometimes detect the location between middle finger and other fingers.
+Table \ref{tb:finger} shows the result of detected finger tip when the gesture is 'three fingers'.
+The error ratio is 12 \%. Fig. \ref{fig:errorfinger} shows examples of failure. As we can see, it fails when the hand is twisted and cannot see all of the three fingers. This would cause about 10 pixels error in video image and cause about pixels error in canvas.
+\begin{table}
+ \caption{The result of three fingers' finger tip detection}
+ \label{tb:finger}
+ \begin{tabular}{|c|c|}
+ \hline
+ The location of the result &  \\ \hline
+ Index finger & 0(0\%) \\ \hline
+ Between index finger and middle finger & 1(0\%) \\ \hline
+ Middle finger & 124 (87\%) \\ \hline
+ Between middle finger and third finger & 12(8\%) \\ \hline
+ Third finger & 6(4\%) \\ \hline
+ Total & 143 \\ \hline
+ \end{tabular}
+\end{table}
