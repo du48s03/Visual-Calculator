@@ -13,6 +13,11 @@ def find_fingertip(label, mask):
     return string           wrist_end    "up/down/left/right" representing the side of the wrist. 
     """ 
     (x,y) = mask.nonzero()
+    # find the minimum / maximum x / y
+    x_min = min(x)
+    y_min = min(y)
+    x_max = max(x)
+    y_max = max(y)
     # find the center
     c_x = x.mean(axis=0)
     c_y = y.mean(axis=0)
