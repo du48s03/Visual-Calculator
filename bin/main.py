@@ -8,6 +8,7 @@ import gui
 import hand_detection
 import fingertip
 import hand_detection as hd
+import numpy as np
 
 
 def main():
@@ -24,12 +25,21 @@ def main():
         cv2.imshow('input',frame)
         
         label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
+        print "label = ", label
+
+        
+        cv2.imshow('debug', frame[hand_mask.reshape(hand_mask.shape+(1,))] )
+        # cv2.imshow('debug', np.rollaxis(np.array([frame[:,:,0]*hand_mask, frame[:,:,1]*hand_mask,frame[:,:,2]*hand_mask]),0,2) )
+
         if(label == posture.poses["UNKNOWN"]):
             continue
         location, wrist_end = fingertip.find_fingertip(label, skin_mask)
         if(not location):
             continue
+        print "location= ", location
+        print "wrist_end = ", wrist_end
         touching = posture.isTouching(frame, label, location, wrist_end)
+        print "touching=" ,touching
 
         #=======The grammar goes here=============
         ui.handle_input(label, location, touching)
