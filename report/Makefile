@@ -1,4 +1,5 @@
 PDFLATEX = pdflatex --halt-on-error --interaction=nonstopmode --file-line-error --shell-es
+BIBER = biber
 
 all: report.pdf
 report.aux: \
@@ -10,9 +11,11 @@ report.aux: \
   major.tex \
 	fingertip.tex \
 
-%.aux: %.tex
+report.bbl: myref.bib
+%.aux %.bcf: %.tex
 	$(PDFLATEX) --draftmode $<
-
-%.pdf: %.tex %.aux
+%.bbl: %.aux %.bcf
+	$(BIBER) $(basename $<)
+%.pdf: %.tex %.aux %.bbl
 	$(PDFLATEX) $<
 

@@ -16,6 +16,8 @@
 \usepackage{listings}
 \usepackage{minted}
 \usepackage{pgffor}
+\usepackage[backend=biber,style=numeric-comp]{biblatex}
+\addbibresource{myref.bib}
 \lstset{
 basicstyle=\small\ttfamily,
 keywordstyle=\color{Blue},
@@ -40,7 +42,6 @@ frame=tbrl,
 \usetikzlibrary{shapes.misc}
 \title{Final Project\\ Gesture based paint system \\ \large Visual Interface COMSW 4735 Spring 2015}
 \author{Angus Ding {\tt ad3180}\\ Ayaka Kume {\tt ak3682}}
-
 \begin{document}
 \maketitle
 \tableofcontents
@@ -52,6 +53,6 @@ frame=tbrl,
 \input{gesture.tex}
 \input{experiment.tex}
 \input{discussion.tex}
-\clearpage
+\printbibliography
 \section*{Appendix:Code}
 \end{document}
