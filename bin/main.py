@@ -29,7 +29,11 @@ def main():
         
         
         label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
+        if(label == posture.poses["UNKNOWN"]):
+            continue
         location, wrist_end = fingertip.find_fingertip(label, skin_mask)
+        if(not location):
+            continue
         touching = posture.isTouching(frame, label, location, wrist_end)
 
         #=======The grammar goes here=============
