@@ -46,5 +46,8 @@ def find_fingertip(label, mask):
     # find the most furthest point (= finger)
     (x,y) = mask.nonzero()
     z = (x - c_x)**2 + (y - c_y)**2
-    return x[z.argmax(0)],y[z.argmax(0)],wrist_ch
+    if len(z) > 0:
+        return x[z.argmax(0)],y[z.argmax(0)],wrist_ch
+    else:
+        return -1,-1,'none'
 
