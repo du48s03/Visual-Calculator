@@ -4,10 +4,11 @@ import gui
 import cv2
 import numpy as np
 import time
-
 global ui 
 ui = gui.GUI()
-
+global palette
+palette = {"RED":(0,0,255)}
+ui.color = palette["RED"]
 global mode 
 global isTouching
 isTouching = False
