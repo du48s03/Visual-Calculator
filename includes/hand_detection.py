@@ -8,6 +8,8 @@ import majoraxis
 
 def detectwrist(mask,theta,c_x,c_y):
     (x,y) = mask.nonzero()
+    if len(x) == 0:
+        return mask
     # find the minimum / maximum x / y
     x_min = min(x)
     y_min = min(y)
