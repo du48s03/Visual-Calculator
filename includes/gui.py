@@ -89,6 +89,10 @@ class GUI(object):
         """ save canvas """
         cv2.imwrite(filename,self.canvas)
 
+    def draw_sample(self,image):
+        """ draw sample image on canvas """
+        self.canvas = image
+
 class Cursor(object):
     """docstring for Cursor"""
     def __init__(self, init_i, init_j):
