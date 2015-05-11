@@ -15,12 +15,13 @@ def drawing(im):
     im2[rgb[0] == 255] = 0
     return im2
 
-def evalcircle(im,center,r):
+def evalcircle(im,center,radius):
+    print radius
     im2 = drawing(im)
     (x,y) = im2.nonzero()
     sump = 0.0
     for i in range(len(x)):
-        sump += math.fabs(((x[i]-center[0])**2 + (y[i]-center[1])**2)**(0.5) - r)
+        sump += math.fabs(((x[i]-center[0])**2 + (y[i]-center[1])**2)**(0.5) - radius)
     sump /= len(x)
     return sump
 
@@ -71,15 +72,15 @@ def exp_circle(username):
     f  = open('../experiments/circle.csv','ab')
     csvWriter = csv.writer(f)
     # do experiment
-    center = [150,190]
-    r = 20
+    center = [250,290]
+    radius = 90.0
     for i in range(3):
         ## for debuging
         im2 = cv2.imread('../test.png')
-        cv2.circle(im2,(190,150),20,(255,0,0),1)
+        cv2.circle(im2,(290,250),90,(255,0,0),1)
         filename = '../experiments/circle_'+username+'_'+str(i) + '.png'
         im = eu.evaluation(filename,im2)
-        c = evalcircle(im,center,r)
+        c = evalcircle(im,center,radius)
         csvWriter.writerow([username,i,time,c])
         print 'wirte'
 
@@ -89,13 +90,13 @@ def exp_line(username):
     f  = open('../experiments/line.csv','ab')
     csvWriter = csv.writer(f)
     # do experiment
-    start = (10,10)
+    start = (50,50)
     end = (400,400)
     for i in range(3):
         ## for debuging
         im2 = cv2.imread('../test.png')
-        cv2.line(im2,(10,10),(400,400),(255,0,0),1)
-        filename = 'experiments/line_'+username+'_'+str(i) + '.png'
+        cv2.line(im2,(50,50),(400,400),(255,0,0),1)
+        filename = '../experiments/line_'+username+'_'+str(i) + '.png'
         im,time = eu.evaluation(filename,im2)
         ## for debugging
         c = evalline(im,start,end)
@@ -114,7 +115,7 @@ def exp_points(username):
         cv2.circle(im2,(350,350),3,(255,0,0),1)
         cv2.circle(im2,(40,350),3,(255,0,0),1)
         cv2.circle(im2,(350,40),3,(255,0,0),1)
-        filename = 'experiments/line_'+username+'_'+str(i) + '.png'
+        filename = '../experiments/points_'+username+'_'+str(i) + '.png'
         im,time = eu.evaluation(filename,im2)
         c = evalpoints(im,points)
         csvWriter.writerow([username,i,time,c])
@@ -125,14 +126,13 @@ def exp_circle_m(username):
     f  = open('../experiments/circle.csv','ab')
     csvWriter = csv.writer(f)
     # do experiment
-    center = [150,190]
-    r = 20
+    center = [250,290]
+    r = 90
     for i in range(3):
-        ## for debuging
         im2 = cv2.imread('../test.png')
-        cv2.circle(im2,(190,150),20,(255,0,0),1)
+        cv2.circle(im2,(290,250),90,(255,0,0),1)
         filename = '../experiments/circle_'+username+'_'+str(i) + '_m.png'
-        im = mo.evaluation(filename,im2)
+        im,time = mo.evaluation(filename,im2)
         c = evalcircle(im,center,r)
         csvWriter.writerow([username,i,time,c,'mouse'])
         print 'wirte'
@@ -143,15 +143,13 @@ def exp_line_m(username):
     f  = open('../experiments/line.csv','ab')
     csvWriter = csv.writer(f)
     # do experiment
-    start = (10,10)
+    start = (50,50)
     end = (400,400)
     for i in range(3):
-        ## for debuging
         im2 = cv2.imread('../test.png')
-        cv2.line(im2,(10,10),(400,400),(255,0,0),1)
+        cv2.line(im2,(50,50),(400,400),(255,0,0),1)
         filename = '../experiments/line_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
-        ## for debugging
         c = evalline(im,start,end)
         csvWriter.writerow([username,i,time,c,'mouse'])
 
@@ -168,7 +166,7 @@ def exp_points_m(username):
         cv2.circle(im2,(350,350),3,(255,0,0),1)
         cv2.circle(im2,(40,350),3,(255,0,0),1)
         cv2.circle(im2,(350,40),3,(255,0,0),1)
-        filename = '../experiments/line_'+username+'_'+str(i) + '_m.png'
+        filename = '../experiments/points_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
         c = evalpoints(im,points)
         csvWriter.writerow([username,i,time,c,'mouse'])

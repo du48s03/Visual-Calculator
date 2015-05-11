@@ -22,15 +22,14 @@ def mouse_cb(event,x,y,flags,param):
         isTouching = True
     if(event == cv2.EVENT_LBUTTONUP):
         isTouching = False
-
-    ui.handle_input(mode, (x,y), isTouching)
+    ui.handle_input_m(mode, (x,y), isTouching)
 
 def evaluation(filename = 'test.png',image = None):
     cv2.namedWindow('gui')
     cv2.setMouseCallback('gui', mouse_cb)
     start = 0
     end = 0
-    print filename
+    ui.canvas = np.ones((480,640,3L),)*255
     while(True):
         cv2.imshow('gui',ui.get_screen())
         pressedKey = cv2.waitKey(60)

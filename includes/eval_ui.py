@@ -17,12 +17,13 @@ ui = gui.GUI()
 #Get the image and do the classification here
 cap = cv2.VideoCapture(0)
 def evaluation(filename = 'test.png', image =None):
+    start = 0
+    end = 0
+    ui.canvas = np.ones((480,640,3L),)*255
     while(True):
         # Capture frame-by-frame
         ret, frame = cap.read()
         frame = cutframe(frame)
-        # Display the input stream only for debug purposes
-        cv2.imshow('input',frame)
 
     
         label, hand_mask = pos_recognizer.classify(frame)
@@ -37,8 +38,12 @@ def evaluation(filename = 'test.png', image =None):
         if pressedKey == ord('q'):
             end = time.time()
             ui.save_canvas(filename)
+            cv2.destroyAllWindows()
             return ui.canvas, end - start
         if pressedKey == ord('r'):
             # add something to add image 
             ui.draw_sample(image)
             start = time.time()
+        if pressedKey & 0xFF == 27:
+            break
+            cv2.destroyAllWindows()
