@@ -6,6 +6,7 @@ import math
 import os
 import csv
 import eval_ui as eu
+import mousepaint as mo
 def drawing(im):
     rgb = cv2.split(im)
     # use only B (because we use Red color to write)
@@ -117,7 +118,60 @@ def exp_points(username):
         im,time = eu.evaluation(filename,im2)
         c = evalpoints(im,points)
         csvWriter.writerow([username,i,time,c])
+
+def exp_circle_m(username):
+    if(not os.path.exists('../experiments')):
+        os.mkdir('../experiments')
+    f  = open('../experiments/circle.csv','ab')
+    csvWriter = csv.writer(f)
+    # do experiment
+    center = [150,190]
+    r = 20
+    for i in range(3):
+        ## for debuging
+        im2 = cv2.imread('../test.png')
+        cv2.circle(im2,(190,150),20,(255,0,0),1)
+        filename = '../experiments/circle_'+username+'_'+str(i) + '_m.png'
+        im = mo.evaluation(filename,im2)
+        c = evalcircle(im,center,r)
+        csvWriter.writerow([username,i,time,c,'mouse'])
         print 'wirte'
+
+def exp_line_m(username):
+    if(not os.path.exists('../experiments')):
+        os.mkdir('../experiments')
+    f  = open('../experiments/line.csv','ab')
+    csvWriter = csv.writer(f)
+    # do experiment
+    start = (10,10)
+    end = (400,400)
+    for i in range(3):
+        ## for debuging
+        im2 = cv2.imread('../test.png')
+        cv2.line(im2,(10,10),(400,400),(255,0,0),1)
+        filename = 'experiments/line_'+username+'_'+str(i) + '_m.png'
+        im,time = mo.evaluation(filename,im2)
+        ## for debugging
+        c = evalline(im,start,end)
+        csvWriter.writerow([username,i,time,c,'mouse'])
+
+def exp_points_m(username):
+    if(not os.path.exists('../experiments')):
+        os.mkdir('../experiments')
+    f  = open('../experiments/points.csv','ab')
+    csvWriter = csv.writer(f)
+    # do experiment
+    points = [(40,40),(40,350),(350,40),(350,350)]
+    for i in range(3):
+        im2 = cv2.imread('../test.png')
+        cv2.circle(im2,(40,40),3,(255,0,0),1)
+        cv2.circle(im2,(350,350),3,(255,0,0),1)
+        cv2.circle(im2,(40,350),3,(255,0,0),1)
+        cv2.circle(im2,(350,40),3,(255,0,0),1)
+        filename = 'experiments/line_'+username+'_'+str(i) + '_m.png'
+        im,time = mo.evaluation(filename,im2)
+        c = evalpoints(im,points)
+        csvWriter.writerow([username,i,time,c,'mouse'])
 
 if __name__ == '__main__':
     exp_points('aya')
