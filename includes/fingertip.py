@@ -15,6 +15,7 @@ def find_fingertip(label, mask):
     (x,y) = mask.nonzero()
     # find the center
     c_x = x.mean(axis=0)
+    c_y = y.mean(axis=0)
     mask[:c_x,:] = 0
     # find the most furthest point (= finger)
     (x,y) = mask.nonzero()
