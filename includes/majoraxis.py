@@ -13,6 +13,8 @@ def majoraxis(mask):
                             Theta is measured in radius. """
     # non zero area
     (x,y) = mask.nonzero()
+    if len(x) == 0:
+        return 0,0,0
     # area
     area = len(x)
     # center position
