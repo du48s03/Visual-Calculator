@@ -5,4 +5,5 @@ report.pdf
 report.toc
 report.aux
 report.pyg
-
+/testvideo/*
+/res/*
