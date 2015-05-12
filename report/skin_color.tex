@@ -1,4 +1,4 @@
-\section{Hand detection}
+h\section{Hand detection}
 Because of our settings, there are only white background, shadow and the hand in an image.
 First, we detect hand using skin color. Then we detect wrist. Because there are only hand or wrist in the scene, we can get hand mask by erasing wrist region. Fig.\ref{fig:hand} shows the overview of the system. For wrist detection, we modify the method from \cite{ra11}.
 All of the functions in this section is in major.py and hand\_detection.py.
@@ -26,24 +26,21 @@ Even though we improve the method, sometimes the skin detection fails and the ha
 \subsection{Result}
 Fig.\ref{fig:hands} shows the results of the hand detection.
 As we can see, the hands are correctly detected.
-However, sometimes the skin detection fails and the hand become smaller of the palm is too small to be a widest length, in that case, we simply extract 2/3 of the all of the region.
 
+\begin{landscape}
 \begin{figure}[htbp]
  \centering
- \input{fig2.tex}
- \caption{fig2}
+ \input{fig1.tex}
+ \caption{Overview of hand detection}
+ \label{fig:hand}
 \end{figure}
-
-\begin{figure}[htbp]
- \centering
- \input{fig3.tex}
- \caption{fig3}
-\end{figure}
+\end{landscape}
 
 \begin{landscape}
 \begin{figure}[htbp]
  \centering
  \input{fig4.tex}
- \caption{fig4}
+ \caption{The results of hand detection}
+ \label{fig:hands}
 \end{figure}
 \end{landscape}

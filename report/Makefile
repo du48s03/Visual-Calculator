@@ -10,6 +10,7 @@ report.aux: \
 	discussion.tex \
   major.tex \
 	fingertip.tex \
+	fig1.tex \
 	fig2.tex \
 	fig3.tex \
 	fig4.tex \

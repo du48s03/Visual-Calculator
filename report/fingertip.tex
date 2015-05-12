@@ -11,7 +11,22 @@ Fig. \ref{fig:finger} shows the results of the finger tip detection.
 This method detects the finger tip correctly when the gesture is one finger or two fingers.
 When the gesture is three fingers, the method sometimes detect the location between middle finger and other fingers.
 Table \ref{tb:finger} shows the result of detected finger tip when the gesture is 'three fingers'.
+We tried 143 frames of three fingers.
 The error ratio is 12 \%. Fig. \ref{fig:errorfinger} shows the examples of failure. As we can see, it fails when the hand is not on the canvas. This would cause about 10 pixels error in video image and cause about 20 pixels error in canvas. This is about 3\% of the average length of the canvas.
+
+\begin{figure}[htbp]
+ \centering
+ \input{fig3.tex}
+ \caption{The results of finger detection}
+\label{fig:finger}
+\end{figure}
+
+\begin{figure}[htbp]
+ \centering
+ \input{fig2.tex}
+ \caption{The errors}
+\label{fig:errorfinger}
+\end{figure}
 
 \begin{table}
  \caption{The result of three fingers' finger tip detection}
