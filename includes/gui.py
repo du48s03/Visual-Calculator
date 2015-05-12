@@ -42,8 +42,8 @@ class GUI(object):
         di1 = i-center1[0]
         dj1 = j-center1[1]
 
-        scalei = center2[0]*2/222.0
-        scalej = center2[1]*2/151.0
+        scalei = center2[0]*2/151.0
+        scalej = center2[1]*2/222.0
 
         di2 = - di1*scalei #Up side down
         dj2 = - dj1*scalej 
