@@ -42,8 +42,8 @@ class GUI(object):
         di1 = i-center1[0]
         dj1 = j-center1[1]
 
-        scalei = center2[0]*2/222.0
-        scalej = center2[1]*2/151.0
+        scalei = center2[0]*2/151.0
+        scalej = center2[1]*2/222.0
 
         di2 = - di1*scalei #Up side down
         dj2 = - dj1*scalej 
@@ -72,8 +72,8 @@ class GUI(object):
         self.screen = np.copy(self.canvas)
         cursor_loc_i = self.cursor.location[0]
         cursor_loc_j = self.cursor.location[1]
-        cv2.line(self.screen, (cursor_loc_i,cursor_loc_j-5), (cursor_loc_i,cursor_loc_j+5), (0,0,0), 2)
-        cv2.line(self.screen, (cursor_loc_i-5,cursor_loc_j), (cursor_loc_i+5,cursor_loc_j), (0,0,0), 2)
+        cv2.line(self.screen, (cursor_loc_j-5, cursor_loc_i), (cursor_loc_j+5, cursor_loc_i), (0,0,0), 2)
+        cv2.line(self.screen, (cursor_loc_j, cursor_loc_i-5), (cursor_loc_j, cursor_loc_i+5), (0,0,0), 2)
 
     def get_screen(self):
         """update the screen with canvas and cursor, then return the screen"""

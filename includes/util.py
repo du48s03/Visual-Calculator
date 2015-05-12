@@ -3,7 +3,7 @@ import cv2
 
 def getgreyat(img, gray_val, r = 5):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    mask_B = (img[:,:,0] > 0.21 * 180) * (img[:,:,0] < 0.67*180)
+    mask_B = (img[:,:,0] > 0 * 180) * (img[:,:,0] < 0.67*180)
     mask_G = (img[:,:,1] > 0.1 *255) * (img[:,:,1] < 0.34*255)
     mask_R = (img[:,:,2] > 0 *255) * (img[:,:,2] < 0.42*255)
     

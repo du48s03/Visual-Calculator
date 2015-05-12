@@ -7,3 +7,5 @@ report.aux
 report.pyg
 /testvideo/*
 /res/*
+test_data\*
+test_video\*

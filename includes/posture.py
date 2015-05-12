@@ -25,7 +25,8 @@ class PostureRecognizer(object):
     def __init__(self):
         super(PostureRecognizer, self).__init__()
         self.feature_extractor = fe.OrientationHistogramFeature()
-        self.classifier = neighbors.KNeighborsClassifier()
+        # self.classifier = neighbors.KNeighborsClassifier()
+        self.classifier = svm.SVC()
         self.model = None
 
 
@@ -148,11 +149,11 @@ def isTouching(frame, label, location, wrist_end, hand_mask):
     # frame_tmp[shadow_mask==False]=0
     # cv2.circle(frame_tmp,shadow_ft ,3,(0,0,255),-1)
     # cv2.imshow('shadow_fingertip', np.multiply(frame, shadow_mask))
-    frame_tmp = np.copy(frame)
-    frame_tmp[shadow_mask==False]=0
-    cv2.circle(frame_tmp,(shadow_ft[1], shadow_ft[0]) ,3,(0,0,255),-1)
-    cv2.circle(frame_tmp,(location[1], location[0]) ,3,(255,0,0),-1)
-    cv2.imshow('shadow', frame_tmp)
+    # frame_tmp = np.copy(frame)
+    # frame_tmp[shadow_mask==False]=0
+    # cv2.circle(frame_tmp,(shadow_ft[1], shadow_ft[0]) ,3,(0,0,255),-1)
+    # cv2.circle(frame_tmp,(location[1], location[0]) ,3,(255,0,0),-1)
+    # # cv2.imshow('shadow', frame_tmp)
     if shadow_ft is None:
         return False
 
