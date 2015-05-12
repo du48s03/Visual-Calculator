@@ -31,7 +31,7 @@ def main():
         cv2.imshow('input',frame)
         
         label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
-        print "label = ", label
+        # print "label = ", label
 
         
         #cv2.imshow('debug', frame[)] )
@@ -44,18 +44,20 @@ def main():
         if(label == posture.poses["UNKNOWN"]):
             continue
         location, wrist_end = fingertip.find_fingertip(label, skin_mask)
+        wrist_end = 'up'
         if(not location):
             continue
-        print "location= ", location
-        print "wrist_end = ", wrist_end
+        # print "location= ", location
+        # print "wrist_end = ", wrist_end
         touching = posture.isTouching(frame, label, location, wrist_end, hand_mask)
-        print "touching=" ,touching
+        # print "touching=" ,touching
 
         #=======The grammar goes here=============
         ui.handle_input(label, location, touching)
-
         cv2.imshow('Canvas', ui.get_screen())
-        pressedKey = cv2.waitKey(0)
+        
+
+        pressedKey = cv2.waitKey(60)
         if pressedKey == 27:
             break
 
