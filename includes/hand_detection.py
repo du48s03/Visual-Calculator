@@ -86,7 +86,7 @@ def hand_detection(image):
     # detect the major axis angle
     [theta,c_x,c_y] = majoraxis.majoraxis(mask)
     # rotate image and detect wrist
-    if len(c_x) > 0:
+    if not math.isnan(c_x):
         rmask = rotateim(mask,theta,c_x,c_y)
         handmask = detectwrist(rmask,theta,c_x,c_y)
         #handmask = mask
