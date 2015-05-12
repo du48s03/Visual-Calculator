@@ -39,7 +39,7 @@ def detectwrist(mask,theta,c_xo,c_yo):
         y2mat = np.ones((x_2-30 - x_min,))* y_2
         x2mat = np.ones((x_2-30 - x_min,))* x_2
         index = np.arange(x_min, x_2-30)
-        ss = np.sum(mask, axis=1)
+        ss = np.sum(mask, axis=1)/255
         slope =  (y2mat - ss[x_min:x_2-30])/(x2mat - index)
         wrist = np.argmax(slope)
         mask[x_min:x_min+wrist,:] = 0
