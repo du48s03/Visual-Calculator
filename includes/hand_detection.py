@@ -27,6 +27,9 @@ def detectwrist(mask,theta,c_xo,c_yo):
     elif l > x_min + 30:
         x_2 = l
         y_2 = sum(mask[l,:])
+    elif r > x_min + 30:
+        x_2 = r
+        y_2 = sum(mask[r,:])
     else:
     # if the condition is not good, simply 1/4 it
         x_2 = -1
