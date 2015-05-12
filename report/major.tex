@@ -26,11 +26,16 @@ Also, minimizing E means the second derivative is larger than 0.
 Using these information, the orientation $\theta = atan2(b,a-c)/2$.\par
 In our program, majoraxis.py has this function.
 Fig.\ref{fig:mom2} shows the results of orientation detection and the rotated image.
-The first column is an input image.
-The second column is a original image. The light blue line is the axis. The blue dot is the center point.
-The last column is a translated image. First, the center point of the hand moves to the center point of the image.
-Then the image is rotated by the angle of $-\theta$.
+The first column is an original image.
+The second column is a translated image. First, the center point of the hand moves to the center point of the image.
+The light blue line is the axis. The blue dot is the center point.\par
+When we return Then the image is rotated by the angle of $-\theta$.
 This shows that this axis does not depends on the small fingertip movement.
 If the binary image of hand has enough amount of areas, this system can detect the angle of the hand.
 However, if the image of hand does not have enougha amount of areas, for example, it can detect only a part of fingers,
 it cannot detect the angle of the hand correctly.
+\begin{figure}
+ \input{fig7.tex}
+ \caption{The results for orientation detection}
+ \label{fig:mom2}
+\end{figure}
