@@ -16,7 +16,7 @@ if os.path.isfile(filename):
     # print "old_data = ", old_data.shape
     # print "old_label = ", old_labels.shape
 else:
-    old_data, old_labels, old_touchs = None, None, None
+    old_data, old_labels, old_touchs = [],[],[]
 
 inputfolder = sys.argv[1]
 datalist, labellist, touchlist = [],[],[]
@@ -36,17 +36,15 @@ for f in os.listdir(inputfolder):
     # touchlist.append(touch)
 
 if len(datalist) != 0:
-    newdata = np.array(datalist)
-    newlabels = np.array(labellist)
-    newtouchs = np.array(touchlist)
-
-    data = newdata if old_data is None else np.concatenate((old_data, newdata),axis=0)
-    labels = newlabels if old_labels is None else np.concatenate((old_labels, newlabels),axis=0)
-    touchs = newtouchs if old_touchs is None else np.concatenate((old_touchs, newtouchs),axis=0)
+    data.extend(old_data)
+    labels.extend(old_labels)
+else:
+    print "No data loaded!"
+    exit()
 
 if os.path.isfile(filename):
     os.remove(filename)
 output = open(filename,'w')
-cPickle.dump((data, labels, touchs), output)
+cPickle.dump((data, labels), output)
 output.close()
 # When everything done, release the capture

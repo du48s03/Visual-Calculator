@@ -61,20 +61,22 @@ class PostureRecognizer(object):
         """train on the training data and the labels. The train_data is a matrix of n x m x 3, 
         where each row is the features of one example. The train_label is a vector of n x 1. 
 
-        params train_data: the training data, a numpy.ndarray. 
-        params train_label: the training labels, a numpy.ndarray. """
+        params train_data: the training data, a list . 
+        params train_label: the training labels, a list. """
         #Get the dimension of the feature first
 
-        img = train_data[0,:,:,:]
+        img = train_data[0]
         feature= self.extract_features(img)[0]
-        features = np.zeros((train_data.shape[0], feature.size))
-        for i in xrange(train_data.shape[0]):
+        features = np.zeros((len(train_data), feature.size))
+        labels = np.zeros((len(train_label)))
+        for i in xrange(len(train_data)):
             label = train_label[i]
-            img = train_data[i,:,:,:]
+            img = train_data[i]
             feature= self.extract_features(img)[0]
             features[i,:] = feature
+            labels[i] = label
         
-        self.classifier.fit(features,train_label)
+        self.classifier.fit(features,labels)
 
     def hand_detection(self, image):
         """transfer the input image into a binary matrix which marks where the hand is. Each pixel 
