@@ -55,9 +55,11 @@ class OrientationHistogramFeature(FeatureExtractor):
         #====Angular disposition=====
         # ang, cx, cy = majoraxis.majoraxis(hand_mask)
         ang = ang/pi*180
-        majorangle = np.where(np.histogram([ang], bins=n_bins,range=(-180,180))[0] != 0)[0][0]
-        ang_hist = np.roll(ang_hist, (n_bins - majorangle)%n_bins )
-
+        try:
+            majorangle = np.where(np.histogram([ang], bins=n_bins,range=(-180,180))[0] != 0)[0][0]
+            ang_hist = np.roll(ang_hist, (n_bins - majorangle)%n_bins )
+        except(IndexError):
+            pass
         return ang_hist, hand_mask, ang, skin_mask
 
 

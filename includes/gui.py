@@ -72,8 +72,8 @@ class GUI(object):
         self.screen = np.copy(self.canvas)
         cursor_loc_i = self.cursor.location[0]
         cursor_loc_j = self.cursor.location[1]
-        cv2.line(self.screen, (cursor_loc_i,cursor_loc_j-5), (cursor_loc_i,cursor_loc_j+5), (0,0,0), 2)
-        cv2.line(self.screen, (cursor_loc_i-5,cursor_loc_j), (cursor_loc_i+5,cursor_loc_j), (0,0,0), 2)
+        cv2.line(self.screen, (cursor_loc_j-5, cursor_loc_i), (cursor_loc_j+5, cursor_loc_i), (0,0,0), 2)
+        cv2.line(self.screen, (cursor_loc_j, cursor_loc_i-5), (cursor_loc_j, cursor_loc_i+5), (0,0,0), 2)
 
     def get_screen(self):
         """update the screen with canvas and cursor, then return the screen"""

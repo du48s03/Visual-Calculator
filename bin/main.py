@@ -28,7 +28,7 @@ def main():
         # Capture frame-by-frame
         ret, frame = cap.read()
         # Display the input stream only for debug purposes
-        cv2.imshow('input',frame)
+        # cv2.imshow('input',frame)
         
         label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
         # print "label = ", label
@@ -38,8 +38,8 @@ def main():
         frame_tmp = np.copy(frame)
         frame_tmp[hand_mask==False] = 0
         cv2.namedWindow('debug')
-        cv2.setMouseCallback('debug',mouse_callback)
-        cv2.imshow('debug', frame_tmp)
+        # cv2.setMouseCallback('debug',mouse_callback)
+        # cv2.imshow('debug', frame_tmp)
 
         if(label == posture.poses["UNKNOWN"]):
             continue
