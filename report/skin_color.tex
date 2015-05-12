@@ -1,14 +1,28 @@
 \section{Hand detection}
-Because of our settings, there are only white background, shadow and the hand in an image\cite{ra11}.
-S
+Because of our settings, there are only white background, shadow and the hand in an image.
+First, we detect hand using skin color. Then we detect wrist. Because there are only hand or wrist in the scene, we can get hand mask by erasing wrist region. Fig.\ref{fig:hand} shows the overview of the system. For wrist detection, we modify the method from \cite{ra11}.
+All of the functions in this section is in major.py and hand\_detection.py.
 \subsection{Skin color detection}
 Because of our settings, there are only white background, shadow and the hand in an image.
-So we detect the hand by color. 
-In particular, we define the skin colr as:
+So we detect the hand by color. We use both RGB and HSV value to detect our skin.
+Because both of our team mates are East Asian, we tried skin detection only for East Asian people.
+In particular, we define skin color pixel as:
 \begin{itemize}
-  \item The difference of Red and Green is larger than 20
-  \item The difference of Red and Blue is larger than 20
+  \item its Red value is larger than Blue value
+  \item its Red value is larger than Green value
+  \item its Value (HSV) is smaller than 73 \%
+  \item its Saturation is larger than 30 \%
  \end{itemize}
+Also we mask where outside of the canvas.
 \subsection{Hand detection}
+Then we have to extract only hand region. If there are long arms, we may not classify the gesture correctly. We modified the method introduced by \cite{ra11}. The method is 
+However, the wrist detection does not work well because the paper assumes the hand gesture as spray hand and so the palm is always the widest. 
+In our case, palms are not fully opened so it is difficult to detect hand region as it is. 
+So we rotate the image along the axis so that we can know the side of the wrist. 
+Fig.\ref{fig:handex} shows the example of the image which can detect wrist by our method but not the proposed method.
+Even though we , sometimes the skin detection fails and the hand become smaller of the palm is too small to be a widest length, in that case, we simply extract 2/3 of the all of the region.
 \input{major.tex}
-\subsubsection{Wrist detection}
+\subsection{Result}
+Fig.\ref{fig:hands} shows the results of the hand detection.
+As we can see, the hands are correctly detected.
+However, sometimes the skin detection fails and the hand become smaller of the palm is too small to be a widest length, in that case, we simply extract 2/3 of the all of the region.

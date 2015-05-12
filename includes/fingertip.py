@@ -15,6 +15,8 @@ def find_fingertip(label, mask):
     mask[mask != 0] = 255
     (x,y) = mask.nonzero()
     # find the minimum / maximum x / y
+    if len(x) > 0:
+        return None,None
     x_min = min(x)
     y_min = min(y)
     x_max = max(x)
