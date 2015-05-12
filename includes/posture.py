@@ -112,13 +112,12 @@ def find_shadow_of(img, location, hand_mask):
     mask = mask_R*mask_G*mask_B*mask_V*mask_nothand
     mask[location[0]:,:] = False
     mask[:,location[1]+40:] = False
-
+    mask[:,:location[1]] = False
 
     # for i in xrange(binimg.shape[0]):
     #     for j in xrange(binimg.shape[1]):
     #         if i>location[0] or j < location[1] or j > location[1] + 40:
     #             binimg[i,j]= False
-
     return mask
 
 def shadow_fingertip(shadow_mask, wrist_end):
@@ -126,7 +125,6 @@ def shadow_fingertip(shadow_mask, wrist_end):
     shadow_indices_i, shadow_indices_j = np.where(shadow_mask)
     if len(shadow_indices_i) ==0:
         return shadow_finger
-
     if wrist_end == 'up':
         finger_ind = shadow_indices_i.argmax()
     elif wrist_end == 'down':
@@ -152,8 +150,10 @@ def isTouching(frame, label, location, wrist_end, hand_mask):
     # cv2.imshow('shadow_fingertip', np.multiply(frame, shadow_mask))
     frame_tmp = np.copy(frame)
     frame_tmp[shadow_mask==False]=0
-    cv2.circle(frame_tmp,shadow_ft ,3,(0,0,255),-1)
+    cv2.circle(frame_tmp,(shadow_ft[1], shadow_ft[0]) ,3,(0,0,255),-1)
+    cv2.circle(frame_tmp,(location[1], location[0]) ,3,(255,0,0),-1)
     cv2.imshow('shadow', frame_tmp)
+    print 'shadow = ', shadow_ft 
 
     print shadow_ft
     if shadow_ft is None:
