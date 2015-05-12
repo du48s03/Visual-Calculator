@@ -89,7 +89,6 @@ def hand_detection(image):
     if not math.isnan(c_x):
         rmask = rotateim(mask,theta,c_x,c_y)
         handmask = detectwrist(rmask,theta,c_x,c_y)
-    
     else:
         handmask = mask
     handmask = np.bool_(handmask)
