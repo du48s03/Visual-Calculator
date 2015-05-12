@@ -1,4 +1,4 @@
-h\section{Hand detection}
+\section{Hand detection}
 Because of our settings, there are only white background, shadow and the hand in an image.
 First, we detect hand using skin color. Then we detect wrist. Because there are only hand or wrist in the scene, we can get hand mask by erasing wrist region. Fig.\ref{fig:hand} shows the overview of the system. For wrist detection, we modify the method from \cite{ra11}.
 All of the functions in this section is in major.py and hand\_detection.py.
@@ -14,16 +14,25 @@ In particular, we define skin color pixel as:
   \item its Saturation is larger than 30 \%
  \end{itemize}
 Also we mask where outside of the canvas.
+\input{major.tex}
 \subsection{Hand detection}
 Then we have to extract only hand region. If there are long arms, we may not classify the gesture correctly. We modified the method introduced by \cite{ra11}. The method is first detect the skin region by color (HSV), and then detect the wrist end. Wrist end is detected by the simple method as follows:
-Fig.\ref{fig:handim} shows the image of the hand. 
+Fig.\ref{fig:handim} shows the image of the hand. First, we calculate the pixels on boundaries, up, down, left, right. 
+We can assume the most largest among up, down, left and right is the wrist side. This is because the author of \cite{ra11} and we assume hand is inside of the image, but human itself is not. Then, they detect the wrist end using intensity historgam. 
+\par
 However, the wrist detection does not work well because the paper assumes the hand gesture as spray hand and so the palm is always the widest. 
 In our case, palms are not fully opened so it is difficult to detect hand region as it is. 
 So we rotate the image along the axis so that we can assume the wrist is always 'up' side and the most left or right part tend to be the palm region.
 Fig.\ref{fig:handex}  can detect wrist by our method but not the proposed method. In this case, the proposed method detects the wrist side correctly, but it will calculate slope with either
 wrist (blue dot) or fingertip (near yellow dot). Then proposed method does not work.
-Even though we improve the method, sometimes the skin detection fails and the hand become smaller of the palm is too small to be a widest length, in that case, we simply extract 1/4 of the all of the region.
-\input{major.tex}
+Our method is as follows.
+\begin{enumerate}
+  \item Find skin color area
+  \item Find orientation of the skin area and rotate
+  \item Assume up side is wrist
+  \item Find wrist end and crop
+\end{enumerate}
+Even though we improve the method, in case the skin detection fails and the hand become smaller of the palm is too small to be a widest length, in that case, we simply extract 1/4 of the all of the region.
 \subsection{Result}
 Fig.\ref{fig:hands} shows the results of the hand detection.
 As we can see, the hands are correctly detected.
