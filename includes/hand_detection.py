@@ -21,17 +21,18 @@ def detectwrist(mask,theta,c_xo,c_yo):
     l = np.where(mask[:,y_min])[0][0]
     r = np.where(mask[:,y_max])[0][0]
     slopes = []
-    if l > r:
+    if l > r and r > x_min + 30:
         x_2 = r
         y_2 = sum(mask[r,:])
-    else:
+    elif l > x_min + 30:
         x_2 = l
         y_2 = sum(mask[l,:])
+    else:
     # if the condition is not good, simply 1/4 it
-    if x_2 <= x_min + 30:
+        x_2 = -1
         mask[x_min:x_min+int(1*(x_max-x_min)/4),:] = 0
     # use the method from paper[5].
-    else:
+    if x_2 > 0:
         for i in range(x_min,x_2-30):
             slope = (y_2 - (sum(mask[i,:])/255))*1.0/(x_2 - i)
             slopes.append(slope)
