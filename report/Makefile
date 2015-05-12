@@ -10,6 +10,9 @@ report.aux: \
 	discussion.tex \
   major.tex \
 	fingertip.tex \
+	fig2.tex \
+	fig3.tex \
+	fig4.tex \
 
 report.bbl: myref.bib
 %.aux %.bcf: %.tex
