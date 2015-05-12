@@ -22,7 +22,7 @@ def mouse_cb(event,x,y,flags,param):
         isTouching = True
     if(event == cv2.EVENT_LBUTTONUP):
         isTouching = False
-    ui.handle_input_m(mode, (x,y), isTouching)
+    ui.handle_input_m(mode, (y,x), isTouching)
 
 def evaluation(filename = 'test.png',image = None):
     cv2.namedWindow('gui')

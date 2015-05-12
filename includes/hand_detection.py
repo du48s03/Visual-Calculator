@@ -36,10 +36,12 @@ def detectwrist(mask,theta,c_xo,c_yo):
         mask[x_min:x_min+int(1*(x_max-x_min)/4),:] = 0
     # use the method from paper[5].
     if x_2 > 0:
-        for i in range(x_min,x_2-30):
-            slope = (y_2 - (sum(mask[i,:])/255))*1.0/(x_2 - i)
-            slopes.append(slope)
-        wrist = slopes.index(max(slopes))
+        y2mat = np.ones((x_2-30 - x_min,))* y_2
+        x2mat = np.ones((x_2-30 - x_min,))* x_2
+        index = np.arange(x_min, x_2-30)
+        ss = np.sum(mask, axis=1)
+        slope =  (y2mat - ss[x_min:x_2-30])/(x2mat - index)
+        wrist = np.argmax(slope)
         mask[x_min:x_min+wrist,:] = 0
     rows,cols = mask.shape[:2]
     M = cv2.getRotationMatrix2D((cols/2,rows/2),(theta*180/math.pi),1)
@@ -95,6 +97,6 @@ def hand_detection(image):
         handmask = detectwrist(rmask,theta,c_x,c_y)
     else:
         handmask = mask
+        theta = 0
     handmask = np.bool_(handmask)
-    # image[handmask==False] = 0
     return handmask, theta, mask
