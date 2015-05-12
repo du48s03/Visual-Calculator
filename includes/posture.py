@@ -100,7 +100,7 @@ class PostureRecognizer(object):
 
 def find_shadow_of(img, location, hand_mask):
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    mask_B = (img[:,:,0] > 0.21 * 180) * (img[:,:,0] < 0.67*180)
+    mask_B = (img[:,:,0] > 0 * 180) * (img[:,:,0] < 0.67*180)
     mask_G = (img[:,:,1] > 0.1 *255) * (img[:,:,1] < 0.34*255)
     mask_R = (img[:,:,2] > 0 *255) * (img[:,:,2] < 0.42*255)
     
@@ -157,7 +157,7 @@ def isTouching(frame, label, location, wrist_end, hand_mask):
         return False
 
     dist = ((location[0]-shadow_ft[0])**2 + (location[1]-shadow_ft[1])**2) **0.5
-    print "dist = ", dist, "wrist=", wrist_end, "touching =", dist<30
+    # print "dist = ", dist, "wrist=", wrist_end, "touching =", dist<30
     return dist < 30
 
         

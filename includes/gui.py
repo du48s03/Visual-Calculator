@@ -51,10 +51,10 @@ class GUI(object):
         return (int(center2[0]+di2), int(center2[1]+dj2))
 
     def drawline(self, loc1, loc2):
-        cv2.line(self.canvas, loc1, loc2, color=self.color, thickness=5)
+        cv2.line(self.canvas, (loc1[1], loc1[0]), (loc2[1], loc2[0]), color=self.color, thickness=5)
 
     def eraseline(self, loc1, loc2):
-        cv2.line(self.canvas, loc1, loc2, color=self.bgcolor, thickness=5)
+        cv2.line(self.canvas, (loc1[1], loc1[0]), (loc2[1], loc2[0]), color=self.bgcolor, thickness=5)
 
     def setcolor(self, color_name):
         """color_name is a string"""
@@ -65,7 +65,7 @@ class GUI(object):
         self.cursor.tool = toolmap[tool_number]
 
     def setcursor(self, location):
-        self.cursor.location = self.conv_coord(location)
+        self.cursor.location = location
 
     def update_screen(self):
         """update the secreen with canvas and cursor"""
