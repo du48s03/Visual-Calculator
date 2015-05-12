@@ -153,13 +153,12 @@ def isTouching(frame, label, location, wrist_end, hand_mask):
     cv2.circle(frame_tmp,(shadow_ft[1], shadow_ft[0]) ,3,(0,0,255),-1)
     cv2.circle(frame_tmp,(location[1], location[0]) ,3,(255,0,0),-1)
     cv2.imshow('shadow', frame_tmp)
-    print 'shadow = ', shadow_ft 
-
-    print shadow_ft
     if shadow_ft is None:
         return False
 
-    return (location[0]-shadow_ft[0])**2 + (location[1]-shadow_ft[1])**2 < 100
+    dist = ((location[0]-shadow_ft[0])**2 + (location[1]-shadow_ft[1])**2) **0.5
+    print "dist = ", dist, "wrist=", wrist_end, "touching =", dist<30
+    return dist < 30
 
         
 
