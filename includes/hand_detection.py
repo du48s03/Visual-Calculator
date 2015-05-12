@@ -72,6 +72,10 @@ def skin_color(image):
     mask[Green > Red] = 0
     mask[V > 0.73*255] = 0
     mask[S < 0.3*255] = 0
+    # erase desks
+    mask[350:,:] = 0
+    mask[:,:190] = 0
+    mask[:,460:] = 0 
     # erase spot noise
     mask = cv2.medianBlur(mask,15)
     return mask

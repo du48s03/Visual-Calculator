@@ -38,11 +38,12 @@ def find_fingertip(label, mask):
         wrist_ch = 'left'
     elif wrist == right:
         wrist_ch = 'right'
-    # find the most furthest point (= finger)
     mask[:c_x,:] = 0
+    # find the most furthest point (= finger)
     (x,y) = mask.nonzero()
     z = (x - c_x)**2 + (y - c_y)**2
     if len(z) > 0:
+        print x[z.argmax(0)],y[z.argmax(0)]
         return (x[z.argmax(0)],y[z.argmax(0)]),wrist_ch
     else:
         return None, None
