@@ -53,6 +53,7 @@ def main():
         # print "touching=" ,touching
 
         #=======The grammar goes here=============
+        print "label = ", label, "location", location, "touching", touching
         ui.handle_input(label, location, touching)
         cv2.imshow('Canvas', ui.get_screen())
         
