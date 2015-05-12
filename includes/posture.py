@@ -25,8 +25,8 @@ class PostureRecognizer(object):
     def __init__(self):
         super(PostureRecognizer, self).__init__()
         self.feature_extractor = fe.OrientationHistogramFeature()
-        # self.classifier = neighbors.KNeighborsClassifier()
-        self.classifier = svm.SVC()
+        self.classifier = neighbors.KNeighborsClassifier()
+        #self.classifier = svm.SVC()
         self.model = None
 
 
@@ -71,12 +71,15 @@ class PostureRecognizer(object):
         labels = np.zeros((len(train_label)))
         for i in xrange(len(train_data)):
             label = train_label[i]
+            print i, ": label = ", label
             img = train_data[i]
             feature= self.extract_features(img)[0]
             features[i,:] = feature
             labels[i] = label
         
+        print "Start fitting"
         self.classifier.fit(features,labels)
+
 
     def hand_detection(self, image):
         """transfer the input image into a binary matrix which marks where the hand is. Each pixel 
@@ -96,6 +99,8 @@ class PostureRecognizer(object):
         return posture :A string which corresponds to one of the defined postures, or -1 if unknown"""
         feature, hand_mask, theta, skin_mask = self.extract_features(image)
         pred = self.classifier.predict(feature)
+        pred = str(int(pred))
+        # print "pred = ", str(int(pred))
         #TODO return -1 if dist is too large
         if pred not in poses.values():
             return poses["UNKNOWN"], hand_mask, theta, skin_mask
@@ -161,7 +166,12 @@ def isTouching(frame, label, location, wrist_end, hand_mask):
 
     dist = ((location[0]-shadow_ft[0])**2 + (location[1]-shadow_ft[1])**2) **0.5
     # print "dist = ", dist, "wrist=", wrist_end, "touching =", dist<30
-    return dist < 30
+    t = False
+    if label == poses["PALM"]:
+        t = dist < 50
+    else:
+        t = dist < 30
+    return t
 
         
 
