@@ -16,14 +16,14 @@ lists = cPickle.load(datafile)
 data, labels = (lists[0], lists[1])
 datafile.close()
 
-data_good = np.ones(len(labels), dtype=bool)
-for i in xrange(len(labels)):
-    if labels[i] not in posture.poses.values():
-        data_good[i] = False
+# data_good = np.ones(len(labels), dtype=bool)
+# for i in xrange(len(labels)):
+#     if labels[i] not in posture.poses.values():
+#         data_good[i] = False
 
-data = data[data_good]
-labels = labels[data_good]
-print "Good data = ", len(data)
+# data = data[data_good]
+# labels = labels[data_good]
+# print "Good data = ", len(data)
 
 
 if os.path.isfile(modelfilename):
