@@ -12,7 +12,7 @@ import numpy as np
 def cutframe(frame):
     return frame[:380]
 
-modelfilename = '../models/model1.mdl'
+modelfilename = '../models/modelKNN.mdl'
 pos_recognizer = posture.PostureRecognizer.load(modelfilename)
 ui = gui.GUI()
 #Get the image and do the classification here

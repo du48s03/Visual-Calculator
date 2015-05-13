@@ -1,5 +1,8 @@
 \subsection{Orientaiton of the hand}
-We define the orientation of the hand as the angle of the axis of least second moment.
+We want to detect the orientation of the hand in order to use training data, or detecting hand region.
+In our program, majoraxis.py has this function.
+We define the orientation of the hand as the angle of the axis of least second moment.\par
+The input is the binary image of skin region.
 Axis of least second moment minimizes E, the sum of the distance from all points to the line. That is,
 $$E = \int \int r^2 b(x,y) dxdy$$
 where $r$ is a distance from b(x,y) to the axis and b(x,y) = 1 when a pixel (x,y) belongs to the object, otherwise 0.
@@ -24,7 +27,6 @@ Because $\partial E / \partial \theta = 0$, we get
 $$(a-c)\sin{2\theta} - b\cos{2\theta} = 0$$
 Also, minimizing E means the second derivative is larger than 0.
 Using these information, the orientation $\theta = atan2(b,a-c)/2$.\par
-In our program, majoraxis.py has this function.
 Fig.\ref{fig:mom2} shows the results of orientation detection and the rotated image.
 The first column is an original image.
 The second column is a translated image. First, the center point of the hand moves to the center point of the image.
@@ -32,8 +34,9 @@ The light blue line is the axis. The blue dot is the center point.\par
 When we return Then the image is rotated by the angle of $-\theta$.
 This shows that this axis does not depends on the small fingertip movement.
 If the binary image of hand has enough amount of areas, this system can detect the angle of the hand.
-However, if the image of hand does not have enougha amount of areas, for example, it can detect only a part of fingers,
+If the image of hand does not have enough amount of areas, for example, it can detect only a part of fingers,
 it cannot detect the angle of the hand correctly.
+However, because of our settings, we always can see enough amount of hand in the target area.
 \begin{figure}
  \input{fig7.tex}
  \caption{The results for orientation detection}
