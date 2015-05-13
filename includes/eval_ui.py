@@ -12,6 +12,9 @@ import fingertip
 import time
 import numpy as np
 import main
+global ui
+ui = gui.GUI()
+
 def cutframe(frame):
     return frame[:380]
 
