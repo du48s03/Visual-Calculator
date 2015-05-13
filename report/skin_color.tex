@@ -36,6 +36,16 @@ Also we mask where outside of the canvas.
  \caption{Hand image Left: original skin color image Right: rotated skin color image}
  \label{fig:handim}
 \end{figure}
+\begin{figure}
+ \centering
+ \begin{tabular}{c}
+  \includegraphics[width=\hsize]{fig6/im.png} \\
+  \includegraphics[width=\hsize]{fig6/hist.png}
+ \end{tabular}
+ \caption{Hand image Top: Hand image. Green line is wrist position and red line is b. Bottom: histogram}
+ \label{fig:handim2}
+\end{figure}
+
 Then we have to extract only hand region. If there are long arms, we may not classify the gesture correctly. We modified the method introduced by \cite{ra11}. The method is first detect the skin region by color (HSV), and then detect the wrist end. Wrist end is detected by the simple method as follows:
 Fig.\ref{fig:handim} shows the image of the hand. 
 First, we calculate the number of the pixels on boundaries, 
@@ -43,13 +53,14 @@ up (between blue point and red point),
 down (between green point and yellow point), left (between blue point and green point), right (between red point and yellow point). 
 We can assume the most largest among up, down, left and right is the wrist side. This is because the author of \cite{ra11} and we assume hand is inside of the image, but human itself is not. 
 Then, they detect the wrist end using intensity histogram. Intensity histogram is the sum of the number of the pixels on the row/cols. If wrist is up/ down, it calculate along rows. Otherwise, it calculate along columns.
-Assume the wrist is down. Let p be a point which is either on a left or right boundaries and the nearest from the down boundary. The author of \cite{ra11} found that the slope on the historgam between b and the wrist end is highest among the slopes between b and other points which is nearer to down than b. b is the point which is the most left or right point so it is always near the most widest region.
+Assume the wrist is down. Let p be a point which is either on a left or right boundaries and the nearest from the down boundary. The author of \cite{ra11} found that the slope on the histogram between b and the wrist end is highest among the slopes between b and other points which is nearer to down than b. b is the point which is the most left or right point so it is always near the most widest region.
 \par
 However, the wrist detection does not work well because the paper assumes the hand gesture as spray hand and so the palm is always the widest. Like Fig.\ref{fig:handim}, we cannot find appropriate b because the most left or right points are not palm, but finger and wrist.
 This is because palms are not fully opened so it is difficult to detect hand region as it is. 
 So we rotate the image along the axis so that we can assume the wrist is always 'up' side and the most left or right part tend to be the palm region.
 Fig.\ref{fig:handim}  can detect wrist by our method but not the previous method. This is because our method can detect the most widest point as b. 
 We assume b is not too near to the wrist end. That is, if left or right is within 30 pixel from up, use another point.
+Fig.\ref{fig:handim2} shows the example of the histogram. Red point in the histogram corresponds to the b's coordinate. Green point in the histogram corresponds to the wrist end's coordinate. The red line and green line in the left image corresponds to the b and wrist end.
 
 Taken together, our method is as follows.
 \begin{enumerate}

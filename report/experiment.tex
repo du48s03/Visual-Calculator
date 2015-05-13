@@ -13,19 +13,19 @@ User starts drawing and when he finish drawing, the tester press 'q' and timer e
 The user do same task three times.
 Time is measured by this timer. The average error is measured by the difference between the example and what he draw. The consistency is measured by the standard deviation of time and average error.
 \par
-To compare the results, we also testd the mouse as the input device. When we point a point in the canvas using a mouse, the pointer moves. When we drag with left click, it draws a line.\par
+To compare the results, we also tested the mouse as the input device. When we point a point in the canvas using a mouse, the pointer moves. When we drag with left click, it draws a line.\par
 We used user as both of our team member.
 \subsection{The average error measurement}
 \subsubsection{Points}
 We measure the distance between what the user draw and the nearest point of the sample.
-To make the measurement easy, we devide the canvas into 4 section.
+To make the measurement easy, we divide the canvas into 4 section.
 If a point the user draw is on upper left, we compare the distance with upper left point of the sample. Same as upper right, lower left and lower right.
 \subsubsection{Circle}
 Circle is the points which distance from the center point are radius.
 We know the center point and the radius of the sample circle.
 Thus we measure the absolute difference between radius and the actual difference from the center point for each points. Then we average them.
 \subsubsection{Line}
-We measure the distance between the actual line and sample line by comparing only 20 points of the lines. We equally sample 20 points in the lines along the vartical axis. And from the most highest points to the most lowest Points, we measure the difference of them.
+We measure the distance between the actual line and sample line by comparing only 20 points of the lines. We equally sample 20 points in the lines along the vertical axis. And from the most highest points to the most lowest Points, we measure the difference of them.
 Fig.\ref{linem} shows the example. Blue line is a sample line and red line is user's line. The points are sample points. Each points are measured with the points which are connected by the black line.
 \begin{figure}
 \input{fig_task.tex}
