@@ -18,7 +18,7 @@ Also we mask where outside of the canvas.
 \subsection{Hand detection}
 Then we have to extract only hand region. If there are long arms, we may not classify the gesture correctly. We modified the method introduced by \cite{ra11}. The method is first detect the skin region by color (HSV), and then detect the wrist end. Wrist end is detected by the simple method as follows:
 Fig.\ref{fig:handim} shows the image of the hand. First, we calculate the pixels on boundaries, up, down, left, right. 
-We can assume the most largest among up, down, left and right is the wrist side. This is because the author of \cite{ra11} and we assume hand is inside of the image, but human itself is not. Then, they detect the wrist end using intensity historgam. 
+We can assume the most largest among up, down, left and right is the wrist side. This is because the author of \cite{ra11} and we assume hand is inside of the image, but human itself is not. Then, they detect the wrist end using intensity histogram. 
 \par
 However, the wrist detection does not work well because the paper assumes the hand gesture as spray hand and so the palm is always the widest. 
 In our case, palms are not fully opened so it is difficult to detect hand region as it is. 

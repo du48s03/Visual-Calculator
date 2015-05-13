@@ -120,7 +120,7 @@ def exp_points(username):
         cv2.circle(im2,(350,350),3,(255,0,0),1)
         cv2.circle(im2,(40,350),3,(255,0,0),1)
         cv2.circle(im2,(350,40),3,(255,0,0),1)
-        filename = '../experiments/line_'+username+'_'+str(i) + '.png'
+        filename = '../experiments/points_'+username+'_'+str(i) + '.png'
         im,time = eu.evaluation(filename,im2)
         c = evalpoints(im,points)
         csvWriter.writerow([username,i,time,c])
@@ -174,7 +174,7 @@ def exp_points_m(username):
         cv2.circle(im2,(350,350),3,(255,0,0),1)
         cv2.circle(im2,(40,350),3,(255,0,0),1)
         cv2.circle(im2,(350,40),3,(255,0,0),1)
-        filename = '../experiments/line_'+username+'_'+str(i) + '_m.png'
+        filename = '../experiments/points_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
         c = evalpoints(im,points)
         csvWriter.writerow([username,i,time,c,'mouse'])
