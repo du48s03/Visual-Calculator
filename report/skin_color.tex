@@ -2,6 +2,7 @@
 Because of our settings, there are only white background, shadow and the hand in an image.
 First, we detect hand using skin color. Then we detect wrist. Because there are only hand or wrist in the scene, we can get hand mask by erasing wrist region. Fig.\ref{fig:hand} shows the overview of the system. For wrist detection, we modify the method from \cite{ra11}.
 All of the functions in this section is in major.py and hand\_detection.py.
+
 \subsection{Skin color detection}
 Because of our settings, there are only white background, shadow and the hand in an image.
 So we detect the hand by color. We use both RGB and HSV value to detect our skin.
@@ -14,6 +15,16 @@ In particular, we define skin color pixel as:
   \item its Saturation is larger than 30 \%
  \end{itemize}
 Also we mask where outside of the canvas.
+\begin{landscape}
+\begin{figure}[htbp]
+ \centering
+ \input{fig1.tex}
+ \caption{Overview of hand detection}
+ \label{fig:hand}
+\end{figure}
+\end{landscape}
+
+
 \input{major.tex}
 \subsection{Hand detection}
 Then we have to extract only hand region. If there are long arms, we may not classify the gesture correctly. We modified the method introduced by \cite{ra11}. The method is first detect the skin region by color (HSV), and then detect the wrist end. Wrist end is detected by the simple method as follows:
@@ -36,15 +47,6 @@ Even though we improve the method, in case the skin detection fails and the hand
 \subsection{Result}
 Fig.\ref{fig:hands} shows the results of the hand detection.
 As we can see, the hands are correctly detected.
-
-\begin{landscape}
-\begin{figure}[htbp]
- \centering
- \input{fig1.tex}
- \caption{Overview of hand detection}
- \label{fig:hand}
-\end{figure}
-\end{landscape}
 
 \begin{landscape}
 \begin{figure}[htbp]
