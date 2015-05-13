@@ -14,6 +14,15 @@ report.aux: \
 	fig2.tex \
 	fig3.tex \
 	fig4.tex \
+	experiment.tex \
+	fig_exp_1_line.tex \
+	fig_exp_1_circle.tex \
+	fig_exp_2_line.tex \
+	fig_exp_2_circle.tex \
+	fig_exp_2_points.tex \
+	fig_exp_2_sd.tex \
+	device.tex \
+	fig_line_error.tex \
 
 report.bbl: myref.bib
 %.aux %.bcf: %.tex
@@ -23,3 +32,4 @@ report.bbl: myref.bib
 %.pdf: %.tex %.aux %.bbl
 	$(PDFLATEX) $<
 
+.DELETE_ON_ERROR:
