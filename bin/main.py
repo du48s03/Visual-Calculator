@@ -46,7 +46,7 @@ def getinput(cap, pos_recognizer):
     # print "wrist_end = ", wrist_end
     # print "check point 3"
     touching = posture.isTouching(frame, label, location, wrist_end, hand_mask)
-
+    return label, location, touching
 
 def main():
     modelfilename = sys.argv[1]
