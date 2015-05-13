@@ -20,9 +20,6 @@ class OrientationHistogramFeature(FeatureExtractor):
 
     def extract_features(self, image):
         hand_mask, ang, skin_mask= hd.hand_detection(image)
-        #hand_mask = image[2] > 40.0
-        # hand_mask_show = hand_mask.astype(np.int)*255*255
-        # cv2.imshow('hand_mask', hand_mask.astype(np.int)*255*255)
         # while cv2.waitKey(20) != ord('a'):
         #     pass 
         hand_mask_tmp = np.reshape(hand_mask, hand_mask.shape+(1,) )

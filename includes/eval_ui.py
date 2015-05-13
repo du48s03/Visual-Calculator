@@ -21,7 +21,7 @@ def cutframe(frame):
 modelfilename = '../models/modelKNN.mdl'
 
 #Get the image and do the classification here
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 def evaluation(filename = 'test.png', image =None):
     start = 0
     end = 0
@@ -32,7 +32,10 @@ def evaluation(filename = 'test.png', image =None):
     
     while(True):
         label, location, touching = main.getinput(cap, pos_recognizer)
-
+        if(not location):
+            if cv2.waitKey(20) == 27:
+                break
+            continue
         #=======The grammar goes here=============
         ui.handle_input(label, location, touching)
 

@@ -12,7 +12,6 @@ import numpy as np
 
 def mouse_callback(event,x,y,flags,param):
     i,j = (y-1,x-1)
-    global counter
     if event == cv2.EVENT_LBUTTONUP:
         print i,j
 

@@ -66,7 +66,7 @@ def main():
     fgd_model = np.zeros((1,65),np.float64)
     rect = (x1,y1,x2,y2)
     cv2.grabCut(im,mask,rect,bgd_model,fgd_model,2,cv2.GC_INIT_WITH_RECT)
-    mask2 = np.where((mask==2)|(mask==0),0,1).astype("uint8")
+    # mask2 = np.where((mask==2)|(mask==0),0,1).astype("uint8")
     im = im*mask2[:,:,np.newaxis]
     gray = cv2.cvtColor(im,cv2.CV_RBG2GRAY)
     cv2.imwrite('graytest.bmp',gray)
