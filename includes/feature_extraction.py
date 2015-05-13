@@ -30,8 +30,8 @@ class OrientationHistogramFeature(FeatureExtractor):
         image_gray =  cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         #masked = np.multiply(image, hand_mask_tmp)
         masked = np.multiply(image_gray, hand_mask)
-        plt.figure()
-        plt.imshow(masked, cmap = matplotlib.cm.Greys_r)
+        # plt.figure()
+        # plt.imshow(masked, cmap = matplotlib.cm.Greys_r)
         # plt.figure()
         # plt.plot(masked)
         # cv2.imshow('masked', masked)
@@ -57,12 +57,14 @@ class OrientationHistogramFeature(FeatureExtractor):
         #     # ranges=[[-180.0,180.0],[int(np.min(amplitudes)), int(np.max(amplitudes))]])
         #     ranges=[[-180.0,180.0],[0,256]])
         n_bins = 36
-        # ang_hist, bins = np.histogram(angles, bins=n_bins,range=(-180.0,180.0))
+        if len(angles) == 0:
+            return np.zeros((n_bins,)), hand_mask, ang, skin_mask
+        ang_hist, bins = np.histogram(angles, bins=n_bins,range=(-180.0,180.0))
         # ang_hist[18]=0
         # #print type(ang_hist)
         # amp_hist = np.histogram(amplitudes, bins=5)[0]
         # plt.figure()
-        ang_hist,bins,patches = plt.hist(angles.flatten(), bins=n_bins, range=(-180, 180), normed=1)
+        #ang_hist,bins,patches = plt.hist(angles.flatten(), bins=n_bins, range=(-180, 180), normed=1)
         # print sum(ang_hist)
         
 

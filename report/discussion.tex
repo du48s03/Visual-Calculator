@@ -1,8 +1,10 @@
 \section{Discussion}
-There are four reasons that the system does not perform well.
-\subsection{Processing time}
-The processing time for each process is too slow to do real time video processing.
-We should have use the information from the previous frame so that we don't have to search all of the regions or recognize the similar posture again.
-\subsection{The outside condition of light}
-The outside condition of light is not stable. It effects the skin and shadow detection.
-We should have make the outside condition fixed like trying in a room without window.
+Apparently the performance of the system is worse than the mouse input, as expected. However, part of the reason of this is because the users are all very familiar with mouse, but only uses this system for the first time. Note that for the circle experiment, the average error for user B is not too much worse than that of the mouse, probably because user B has practiced with the system for a longer time. This shows that, with enough practice, the precision of the system can achieve the same level of the mouse. 
+
+From the experience of the user, the system has a hard time correctly classifying the postures. The user needs to find a posture that the system recognizes the best, and try to maintain that posture during the task. This interferes with the speed the user can draw, and also makes the user fatigue. This problem can possibly be fixed with more complete training dataset. 
+
+The processing time for each frame is too long for a practical real time application. This could be because the method we use for classification is k nearst neighbors and we have too many training data, resulting in the system needing too much time to search for the nearest k neighbors. A possible solution is to use SVM which is not effected by the number of the training data and is effective once the training is done. Another possible improvement is to utilize the information from the previous frame. For example, one can search for the fingertip only around the fingertip in the previous frame, instead of the whole image. 
+
+The environmental conditions are also crutial. The light from the environment can affect the intensity of the shadow, thus the system can not properly determine if the user is touching the paper. One way to solve this problem is to put the system in a box where the interference from the outside is the minimum. 
+
+We conclude that, it is possible to implement a system for the task of drawing solely relying on the visual input signal, although much more work has to be done. 
