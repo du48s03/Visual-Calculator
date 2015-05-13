@@ -34,14 +34,11 @@ def getinput(cap, pos_recognizer):
 
     if(label == posture.poses["UNKNOWN"]):
         print "posture = UNKNOWN"
-        if cv2.waitKey(60) ==27:
-            break
-        continue
     # print "check point 2"
     location, wrist_end = fingertip.find_fingertip(label, skin_mask)
     wrist_end = 'up'
     if(not location):
-        continue
+        return label, location, False
     # print "location= ", location
     # print "wrist_end = ", wrist_end
     # print "check point 3"
@@ -58,6 +55,10 @@ def main():
     while(True):
         # Capture frame-by-frame
         label, location, touching = getinput(cap, pos_recognizer)
+        if(not location):
+            if cv2.waitKey(20) == 27:
+                break
+            continue
         # print "touching=" ,touching
         #=======The grammar goes here=============
         print "label = ", label, "location", location, "touching", touching
