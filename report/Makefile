@@ -22,6 +22,7 @@ report.aux: \
 	fig_exp_2_points.tex \
 	fig_exp_2_sd.tex \
 	device.tex \
+	fig_line_error.tex \
 
 report.bbl: myref.bib
 %.aux %.bcf: %.tex
@@ -31,3 +32,4 @@ report.bbl: myref.bib
 %.pdf: %.tex %.aux %.bbl
 	$(PDFLATEX) $<
 
+.DELETE_ON_ERROR:
