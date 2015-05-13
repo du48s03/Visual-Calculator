@@ -45,7 +45,7 @@ def evalline(im,start,end):
             raise IndexError("Out of bound")
         else:
             epoint[1] = ys[0]
-        print point, epoint
+        #print point, epoint
         sump += evalpoint(epoint,point)
     sump /= 20
     return sump
@@ -58,7 +58,7 @@ def evalpoints(im,points):
     rows,cols = im2.shape
     (x,y) = im2.nonzero()
     sump = 0
-    print points
+    #print points
     for i in range(len(x)):
         print x[i],y[i]
         if x[i] < rows/2 and y[i] < cols/2:
@@ -76,9 +76,13 @@ def exp_circle(username):
         os.mkdir('../experiments')
     f  = open('../experiments/circle.csv','ab')
     csvWriter = csv.writer(f)
+    ff = open('../experiments/std.csv','ab')
+    csvWriter2 = csv.writer(ff)
     # do experiment
     center = [250,290]
     r = 190
+    ts = []
+    cs = []
     for i in range(3):
         ## for debuging
         im2 = cv2.imread('../test.png')
@@ -86,7 +90,11 @@ def exp_circle(username):
         filename = '../experiments/circle_'+username+'_'+str(i) + '.png'
         im,time = eu.evaluation(filename,im2)
         c = evalcircle(im,center,r)
-        csvWriter.writerow([username,i,time,c])
+        csvWriter.writerow([username,'VI', i , round(time,3),round(c,3)])
+        ts.append(time)
+        cs.append(c)
+        if i == 2:
+            csvWriter2.writerow(['circle',username,'VI',round(np.std(ts),3),round(np.std(cs),3)])
         print 'wirte'
 
 def exp_line(username):
@@ -94,6 +102,10 @@ def exp_line(username):
         os.mkdir('../experiments')
     f  = open('../experiments/line.csv','ab')
     csvWriter = csv.writer(f)
+    ff = open('../experiments/std.csv','ab')
+    csvWriter2 = csv.writer(ff)
+    ts = []
+    cs = []
     # do experiment
     start = (50,50)
     end = (400,400)
@@ -105,14 +117,22 @@ def exp_line(username):
         im,time = eu.evaluation(filename,im2)
         ## for debugging
         c = evalline(im,start,end)
-        csvWriter.writerow([username,i,time,c])
-
+        csvWriter.writerow([username,'VI', i , round(time,3),round(c,3)])
+        ts.append(time)
+        cs.append(c)
+        if i == 2:
+            csvWriter2.writerow(['line',username,'VI',round(np.std(ts),3),round(np.std(cs),3)])
+ 
 def exp_points(username):
     if(not os.path.exists('../experiments')):
         os.mkdir('../experiments')
     f  = open('../experiments/points.csv','ab')
     csvWriter = csv.writer(f)
+    ff = open('../experiments/std.csv','ab')
+    csvWriter2 = csv.writer(ff)
     # do experiment
+    ts = []
+    cs = []
     points = [(40,40),(40,350),(350,40),(350,350)]
     for i in range(3):
         im2 = cv2.imread('../test.png')
@@ -123,16 +143,24 @@ def exp_points(username):
         filename = '../experiments/points_'+username+'_'+str(i) + '.png'
         im,time = eu.evaluation(filename,im2)
         c = evalpoints(im,points)
-        csvWriter.writerow([username,i,time,c])
-
+        csvWriter.writerow([username,'VI', i , round(time,3),round(c,3)])
+        ts.append(time)
+        cs.append(c)
+        if i == 2:
+            csvWriter2.writerow(['points',username,'VI',round(np.std(ts),3),round(np.std(cs),3)])
+ 
 def exp_circle_m(username):
     if(not os.path.exists('../experiments')):
         os.mkdir('../experiments')
     f  = open('../experiments/circle.csv','ab')
     csvWriter = csv.writer(f)
-    # do experiment
+    ff = open('../experiments/std.csv','ab')
+    csvWriter2 = csv.writer(ff)
+   # do experiment
     center = [250,290]
     r = 190
+    ts = []
+    cs = []
     for i in range(3):
         ## for debuging
         im2 = cv2.imread('../test.png')
@@ -140,14 +168,23 @@ def exp_circle_m(username):
         filename = '../experiments/circle_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
         c = evalcircle(im,center,r)
-        csvWriter.writerow([username,i,time,c,'mouse'])
+        csvWriter.writerow([username,'mouse',i,round(time,3),round(c,3)])
         print 'wirte'
-
+        ts.append(time)
+        cs.append(c)
+        if i == 2:
+            csvWriter2.writerow(['circle',username,'mouse',round(np.std(ts),3),round(np.std(cs),3)])
+ 
 def exp_line_m(username):
     if(not os.path.exists('../experiments')):
         os.mkdir('../experiments')
     f  = open('../experiments/line.csv','ab')
     csvWriter = csv.writer(f)
+    ff = open('../experiments/std.csv','ab')
+    csvWriter2 = csv.writer(ff)
+    ts = []
+    cs = []
+ 
     # do experiment
     start = (50,50)
     end = (400,400)
@@ -159,15 +196,23 @@ def exp_line_m(username):
         im,time = mo.evaluation(filename,im2)
         ## for debugging
         c = evalline(im,start,end)
-        csvWriter.writerow([username,i,time,c,'mouse'])
-
+        csvWriter.writerow([username,'mouse',i,round(time,3),round(c,3)])
+        ts.append(time)
+        cs.append(c)
+        if i == 2:
+            csvWriter2.writerow(['line',username,'mouse',round(np.std(ts),3),round(np.std(cs),3)])
+ 
 def exp_points_m(username):
     if(not os.path.exists('../experiments')):
         os.mkdir('../experiments')
     f  = open('../experiments/points.csv','ab')
     csvWriter = csv.writer(f)
+    ff = open('../experiments/std.csv','ab')
+    csvWriter2 = csv.writer(ff)
     # do experiment
     points = [(40,40),(40,350),(350,40),(350,350)]
+    ts = []
+    cs = []
     for i in range(3):
         im2 = cv2.imread('../test.png')
         cv2.circle(im2,(40,40),3,(255,0,0),1)
@@ -177,7 +222,11 @@ def exp_points_m(username):
         filename = '../experiments/points_'+username+'_'+str(i) + '_m.png'
         im,time = mo.evaluation(filename,im2)
         c = evalpoints(im,points)
-        csvWriter.writerow([username,i,time,c,'mouse'])
-
+        csvWriter.writerow([username,'mouse',i,round(time,3),round(c,3)])
+        ts.append(time)
+        cs.append(c)
+        if i == 2:
+            csvWriter2.writerow(['points',username,'mouse',round(np.std(ts),3),round(np.std(cs),3)])
+ 
 if __name__ == '__main__':
     exp_points('aya')
