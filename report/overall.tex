@@ -7,13 +7,13 @@ To implement the drawing function, the system has a drawing flag which is either
 The posture of the hand is the ``pointing finger''
 \item
 The fingertip is touching the paper
-\end{itemize}•
+\end{itemize}
 If the system is in the drawing state in both the previous and the current frame, a line will be drawn from the previous location of the fingertip to that of the current one. We draw a line instead of drawing a point at each location because the movement of the user's hand is usually too fast for the frequency with which we process the frames, which makes a continuous movement of the finger draw many disconnected dots instead of a line, as might be the user's intention. If either the previous frame or the current frame is not a drawing frame, then we don't draw the line. 
 
-The similar process is defined for the erase function. The difference is that the ``erasing'' state is defined with the ``palm'' posture instead of the ``pointing finger'', and instead of drawing a line with the currently selected color, we simply draw a line with the background color, which is default to be white. 
+The similar process is used for the erase function. The difference is that the ``erasing'' state is defined with the ``palm'' posture instead of the ``pointing finger'', and instead of drawing a line with the currently selected color, we simply draw a line with the background color, which is white by default.
 
-To allow the user to select different color to draw, we define a ``hand down'' event. A ``hand down'' event happens if the user is not touching the paper in the previous frame and is touching the paper in the curren frame. When this event happens and when the user's posture is ``pointing finger'', we check if the location of the finger point is in the predefined area of one of the colors. If it is, we change the current seleceted color to that color. 
+To allow the user to select different color to draw, we define a ``hand down'' event. A ``hand down'' event happens if the user is not touching the paper in the previous frame and is in the curren frame. When this event happens and when the user's posture is ``pointing finger'', we check if the location of the finger point is in the predefined area of one of the colors. If it is, we change the current seleceted color to it. 
 
-No matter what the events are, the location of the cursor is always set to the current location of the fingertip. This is important because even if the user is not currently drawing, without the cursor matching the movement of the hand the user won't know where he or she should put the hand down. If we can not detect the fingertip, then we assume the user is not currently using the system, and simply does nothing about this frame. 
+No matter what the events are, the location of the cursor is always set to the current location of the fingertip. This is important because even if the user is not currently drawing, without the cursor matching the movement of the hand the user wouldn't know where he or she should put the hand down. If we can not detect the fingertip, then we assume the user is not currently using the system, and simply does nothing about this frame. 
 
-Now we discuss how we will reteive the three important information of each frame. 
+Now we discuss how we will reteive the three important informations of each frame. 
