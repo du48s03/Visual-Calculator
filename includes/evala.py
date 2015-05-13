@@ -28,8 +28,10 @@ def evalline(im,start,end):
     # this evaluation cannot be used for lines parallel to x axis
     im2 = drawing(im)
     (x,y) = im2.nonzero()
+    x = np.sort(x)
     min_y = min(y)
     max_y = max(y)
+    
     print min_y,max_y
     sump = 0
     for i in range(20):
@@ -38,7 +40,11 @@ def evalline(im,start,end):
         point[0] = start[0] + i * (end[0] - start[0]) / 20
         point[1] = start[1] + i * (end[1] - start[1]) / 20
         epoint[0] = x[int(len(x) * i / 20)]
-        epoint[1] = np.where(im2[:,epoint[0]])[0][0]
+        ys = np.where(im2[epoint[0],:])[0]
+        if (len(ys) == 0):
+            raise IndexError("Out of bound")
+        else:
+            epoint[1] = ys[0]
         print point, epoint
         sump += evalpoint(epoint,point)
     sump /= 20

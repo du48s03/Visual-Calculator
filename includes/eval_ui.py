@@ -18,7 +18,7 @@ ui = gui.GUI()
 def cutframe(frame):
     return frame[:380]
 
-modelfilename = '../models/modelKNN.mdl'
+modelfilename = '../models/modelKNN2.mdl'
 
 #Get the image and do the classification here
 cap = cv2.VideoCapture(1)
