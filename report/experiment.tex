@@ -27,13 +27,22 @@ Thus we measure the absolute difference between radius and the actual difference
 \subsubsection{Line}
 We measure the distance between the actual line and sample line by comparing only 20 points of the lines. We equally sample 20 points in the lines along the vartical axis. And from the most highest points to the most lowest Points, we measure the difference of them.
 Fig.\ref{linem} shows the example. Blue line is a sample line and red line is user's line. The points are sample points. Each points are measured with the points which are connected by the black line.
-\subsection{Results}
-Table \ref{tb:p2} shows the measurement results of the points task. Table \ref{tb:c1} and Table \ref{tb:c2} show the results of the circle task and the actual canvas image. Table \ref{tb:l1} and Table \ref{tb:l2} show the results of the line task and the actual canvas image. Table \ref{tb:exp} shows the standard deviation of them. In all tasks, mouse device results are better than our input device. Among three tasks, for our device performance is better in circle task. We can see the time deviation is better than the error deviation.
 \begin{figure}
 \input{fig_task.tex}
  \caption{Three tasks}
  \label{task}
 \end{figure}
+
+\begin{figure}[htbp]
+ \centering
+ \input{fig_line_error.tex}
+ \caption{Line error measurement}
+ \label{linem}
+\end{figure}
+
+
+\subsection{Results}
+Table \ref{tb:p2} shows the measurement results of the points task. Table \ref{tb:c1} and Table \ref{tb:c2} show the results of the circle task and the actual canvas image. Table \ref{tb:l1} and Table \ref{tb:l2} show the results of the line task and the actual canvas image. Table \ref{tb:exp} shows the standard deviation of them. In all tasks, mouse device results are better than our input device. Among three tasks, for our device performance is better in circle task. We can see the time deviation is better than the error deviation.
 
 \begin{table}[htbp]
  \centering
@@ -83,8 +92,3 @@ Table \ref{tb:p2} shows the measurement results of the points task. Table \ref{t
  \label{tb:exp}
  \input{fig_exp_2_sd.tex}
 \end{table}
-\begin{figure}[htbp]
- \centering
- \input{fig_line_error.tex}
- \caption{Line error measurement}
-\end{figure}
