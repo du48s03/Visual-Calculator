@@ -2,15 +2,19 @@ import numpy as np
 import math
 def majoraxis(mask):
     """
-    Find the major axis of the hand. The input image is a binary image of the hand mask.
+    Find the major axis of the hand. The input image is
+    a binary image of the hand mask.
     Return the angle and the y-intercept of the major axis. 
-    Major axis is compute by minimizing the integral of the distances from all hand pixels to the 
+    Major axis is compute by minimizing the integral of the 
+    distances from all hand pixels to the 
     major axis. 
 
 
-    @param np.array img     The input image A numpy.array of size (480,640), dtype=np._bool
-    return (theta, c_x, c_y) The majoraxis described with the angle theta and the center point of the object. 
-                            Theta is measured in radius. """
+    @param np.array img     
+    The input image A numpy.array of size (480,640), dtype=np._bool
+    return (theta, c_x, c_y) 
+    The majoraxis described with the angle theta and the center point of the object. 
+    Theta is measured in radius. """
     # non zero area
     (x,y) = mask.nonzero()
     if len(x) == 0:

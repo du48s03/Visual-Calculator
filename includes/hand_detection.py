@@ -6,6 +6,7 @@ import time
 import math
 import majoraxis
 
+# wrist detection part
 def detectwrist(mask,theta,c_xo,c_yo):
     (x,y) = mask.nonzero()
     if len(x) == 0:
@@ -61,6 +62,7 @@ def rotateim(im,theta,c_x,c_y):
     M = cv2.getRotationMatrix2D((cols/2,rows/2),-(theta*180/math.pi),1)
     dst = cv2.warpAffine(dst,M,(cols,rows))
     return dst
+
 # skin color detection using hsv,rgb
 def skin_color(image):
     # detect hand region
@@ -85,6 +87,7 @@ def skin_color(image):
     # erase spot noise
     mask = cv2.medianBlur(mask,15)
     return mask
+
 # main function -- detecting hand region
 def hand_detection(image):
     # skin color detection from the original image
