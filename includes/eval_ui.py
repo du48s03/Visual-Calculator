@@ -8,6 +8,7 @@ import gui
 import hand_detection
 import fingertip
 import time
+import numpy as np
 def cutframe(frame):
     return frame[:380]
 

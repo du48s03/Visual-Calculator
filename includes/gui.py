@@ -2,8 +2,16 @@ import cv2
 import numpy as np
 import posture
 
-#BGR
+palette_ub = (163, 181)
+
 palette = {
+    (215, 237): "RED",
+    (249, 271): "BLACK",
+    (282, 304): "GREEN",
+    (315, 338): "BLUE",
+}
+#BGR
+color_map = {
     "WHITE":(255,255,255), 
     "BLACK":(0,0,0), 
     "RED":(0,0,255), 
@@ -24,8 +32,8 @@ class GUI(object):
         self.size = (480,640)
         self.canvas = np.ones((480,640, 3L),)*255
         self.cursor = Cursor(self.size[0]/2, self.size[1]/2)
-        self.color = palette["BLACK"]
-        self.bgcolor = palette["WHITE"]
+        self.color = color_map["BLACK"]
+        self.bgcolor = color_map["WHITE"]
 
         self.drawing = False
         self.erasing = False
@@ -58,7 +66,7 @@ class GUI(object):
 
     def setcolor(self, color_name):
         """color_name is a string"""
-        self.color = palette[color]
+        self.color = color_map[color_name]
 
     def settool(self, tool_number):
         """Tool is a string indicating which tool to change to """
@@ -90,7 +98,11 @@ class GUI(object):
             self.eraseline(self.cursor.location, cvt_coord)
 
         #Color selection
-        # if not self.drawing and isTouching and label == posture.poses['POINTING']:#Finger down event
+        if not self.drawing and isTouching and label == posture.poses['POINTING']:#Finger down event
+            if location[0] > palette_ub[0] and location[0] < palette_ub[1]:
+                for r in palette:
+                    if location[1]> r[0] and location[1] < r[1]:
+                        self.setcolor(palette[r])
 
         # if not self.erasing and isTouching and label == posture.poses['PALM']:#Finger down event        
 

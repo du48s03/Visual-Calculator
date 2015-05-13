@@ -23,7 +23,7 @@ for f in os.listdir(inputfolder):
     s = re.search(r'train_data_([0-9])_([0-9]+)\.png', f)
     label = s.group(1)
     n = s.group(2)
-    print label, n
+    # print label, n
     if label == posture.poses["DBFINGER"]:
         continue
     img = cv2.imread(inputfolder+'/'+f)
@@ -35,44 +35,29 @@ for f in os.listdir(inputfolder):
     labellist.append(label)
     # touchlist.append(touch)
 print "Done\n"
-indices = np.random.permutation(len(datalist) ).tolist()
-traindata, trainlabels= [], []
-testdata, testlabels = [], []
-
-for ind in indices:
-
-    if ind < len(datalist)/10*5:
-        traindata.append(datalist[ind])
-        trainlabels.append(labellist[ind])
-
-        print ind, "label = ", labellist[ind], "train"
-    else:
-        testdata.append(datalist[ind])
-        testlabels.append(labellist[ind])
-        print ind, "label = ", labellist[ind], "test"
 
 
+#====Load the model==============
 if os.path.isfile(modelfilename):
     print "Loading: ", modelfilename
     pos_recognizer = posture.PostureRecognizer.load(modelfilename)
 else:
-    print "Creating: ", modelfilename
-    pos_recognizer = posture.PostureRecognizer()
+    raise ValueError("No model file "+modelfilename+" doesn't exists")
 #Do the training here
-print "Start training" 
-pos_recognizer.train(traindata, trainlabels)
-print "saving data"
-pos_recognizer.save(modelfilename)
+# print "Start training" 
+# pos_recognizer.train(traindata, trainlabels)
+# print "saving data"
+# pos_recognizer.save(modelfilename)
 
 
 #==========validation===============
 score = 0.0
 total = 0.0
-for i in xrange(len(testlabels)):
-    pred = pos_recognizer.classify(testdata[i])[0]
+for i in xrange(len(datalist)):
+    pred = pos_recognizer.classify(datalist[i])[0]
     total+=1
-    print i, 'pred = ', pred, 'label=' ,testlabels[i]
-    if str(pred) == testlabels[i]:
+    print i, 'pred = ', pred, 'label=' ,labellist[i]
+    if str(pred) == labellist[i]:
         score +=1
 
 print "================\n"

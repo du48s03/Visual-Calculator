@@ -16,6 +16,37 @@ def mouse_callback(event,x,y,flags,param):
     if event == cv2.EVENT_LBUTTONUP:
         print i,j
 
+def getinput(cap, pos_recognizer):
+    ret, frame = cap.read()
+    # Display the input stream only for debug purposes
+    cv2.imshow('input',frame)
+    # print "check point 1"
+    label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
+    # print "label = ", label
+
+    
+    #cv2.imshow('debug', frame[)] )
+    # frame_tmp = np.copy(frame)
+    # frame_tmp[hand_mask==False] = 0
+    # cv2.namedWindow('debug')
+    # cv2.setMouseCallback('debug',mouse_callback)
+    # cv2.imshow('debug', frame_tmp)
+
+    if(label == posture.poses["UNKNOWN"]):
+        print "posture = UNKNOWN"
+        if cv2.waitKey(60) ==27:
+            break
+        continue
+    # print "check point 2"
+    location, wrist_end = fingertip.find_fingertip(label, skin_mask)
+    wrist_end = 'up'
+    if(not location):
+        continue
+    # print "location= ", location
+    # print "wrist_end = ", wrist_end
+    # print "check point 3"
+    touching = posture.isTouching(frame, label, location, wrist_end, hand_mask)
+
 
 def main():
     modelfilename = sys.argv[1]
@@ -26,37 +57,8 @@ def main():
 
     while(True):
         # Capture frame-by-frame
-        ret, frame = cap.read()
-        # Display the input stream only for debug purposes
-        cv2.imshow('input',frame)
-        # print "check point 1"
-        label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
-        # print "label = ", label
-
-        
-        #cv2.imshow('debug', frame[)] )
-        # frame_tmp = np.copy(frame)
-        # frame_tmp[hand_mask==False] = 0
-        # cv2.namedWindow('debug')
-        # cv2.setMouseCallback('debug',mouse_callback)
-        # cv2.imshow('debug', frame_tmp)
-
-        if(label == posture.poses["UNKNOWN"]):
-            print "posture = UNKNOWN"
-            if cv2.waitKey(60) ==27:
-                break
-            continue
-        # print "check point 2"
-        location, wrist_end = fingertip.find_fingertip(label, skin_mask)
-        wrist_end = 'up'
-        if(not location):
-            continue
-        # print "location= ", location
-        # print "wrist_end = ", wrist_end
-        # print "check point 3"
-        touching = posture.isTouching(frame, label, location, wrist_end, hand_mask)
+        label, location, touching = getinput(cap, pos_recognizer)
         # print "touching=" ,touching
-
         #=======The grammar goes here=============
         print "label = ", label, "location", location, "touching", touching
         ui.handle_input(label, location, touching)
