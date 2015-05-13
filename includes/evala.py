@@ -37,7 +37,7 @@ def evalline(im,start,end):
         epoint = [0,0]
         point[0] = start[0] + i * (end[0] - start[0]) / 20
         point[1] = start[1] + i * (end[1] - start[1]) / 20
-        epoint[0] = min_y + i * (max_y - min_y)/20
+        epoint[0] = x[int(len(x) * i / 20)]
         epoint[1] = np.where(im2[:,epoint[0]])[0][0]
         print point, epoint
         sump += evalpoint(epoint,point)
