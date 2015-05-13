@@ -1,5 +1,16 @@
 \begin{tikzpicture}
  \draw (0, 0) -- ++(30:4);
- \draw (0, -1) -- ++ (-30:1.5);
- \draw (0, -1) + (-30:3.5) -- ++(-30:6)
+ \draw[red] (0, -1) -- ++ (-30:1.5);
+ \draw[red] (0, -1) + (-30:3.5) -- ++(-30:6);
+ \draw[dashed,fill] (0, 0) circle (2pt) -- (0, -1);
+ \draw[dashed,fill] (0, 0) + (30:1) circle (2pt) -- ($(0, -1) + (-30:1)$);
+ \draw[dashed,fill] (0, 0) + (30:2) circle (2pt) -- ($(0, -1) + (-30:4)$);
+ \draw[dashed,fill] (0, 0) + (30:3) circle (2pt) -- ($(0, -1) + (-30:5)$);
+ \draw[dashed,fill] (0, 0) + (30:4) circle (2pt) -- ($(0, -1) + (-30:6)$);
+ \draw[fill=red] (0, -1)           circle (2pt);
+ \draw[fill=red] (0, -1) + (-30:1) circle (2pt);
+ \draw[fill=red] (0, -1) + (-30:4) circle (2pt);
+ \draw[fill=red] (0, -1) + (-30:5) circle (2pt);
+ \draw[fill=red] (0, -1) + (-30:6) circle (2pt);
+
 \end{tikzpicture}
