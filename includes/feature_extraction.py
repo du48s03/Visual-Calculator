@@ -81,7 +81,3 @@ class OrientationHistogramFeature(FeatureExtractor):
         # plt.hist(range(-180,180, 10), bins=n_bins, range=(-180,180), weights=ang_hist)
         # plt.show()
         return ang_hist, hand_mask, ang, skin_mask
-
-
-
-        

@@ -172,10 +172,3 @@ def isTouching(frame, label, location, wrist_end, hand_mask):
     else:
         t = dist < 30
     return t
-
-        
-
-
-
-
-        

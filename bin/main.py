@@ -22,7 +22,6 @@ def getinput(cap, pos_recognizer):
     # print "check point 1"
     label, hand_mask, theta, skin_mask = pos_recognizer.classify(frame)
     # print "label = ", label
-
     
     #cv2.imshow('debug', frame[)] )
     # frame_tmp = np.copy(frame)
@@ -63,7 +62,6 @@ def main():
         print "label = ", label, "location", location, "touching", touching
         ui.handle_input(label, location, touching)
         cv2.imshow('Canvas', ui.get_screen())
-        
 
         pressedKey = cv2.waitKey(60)
         if pressedKey == 27:

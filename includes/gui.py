@@ -106,7 +106,6 @@ class GUI(object):
 
         # if not self.erasing and isTouching and label == posture.poses['PALM']:#Finger down event        
 
-
         #Finally, update state
         self.drawing  = label == posture.poses['POINTING'] and isTouching
         self.erasing  = label == posture.poses['PALM'] and isTouching
@@ -147,4 +146,3 @@ class Cursor(object):
     def __init__(self, init_i, init_j):
         self.location = (init_i, init_j)
         self.tool = toolmap[1]
-        
