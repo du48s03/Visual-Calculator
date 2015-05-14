@@ -1,18 +1,18 @@
 \section{Fingertip detection}
 In order to draw points using finger information, we have to detect the location of the fingertip.
-If the gesture is 'draw (one finger)', we detect the fingertip of the index finger. 
-If the gesture is 'erase (three fingers)' or 'move (two fingers)', we detect the fingertip of the middle finger. \par
-We assume the fingertip is the further point from the center of the mass and also not the wrist side.
-Our environment allows us to assume the wrist side is always top of the image, we simply find the furthest point from the center of the mass among the bottom half of the mask.
+If the posture is the ' pointing finger', we detect the fingertip of the index finger. 
+If the posture is the 'palm', we detect the fingertip of the middle finger. \par
+We assume that the fingertip is the furthest point from the center of the mass that is on the opposite side of the wrist .
+Our environment allows us to assume the wrist side is always top of the image, so we can simply find the furthest point from the center of the mass among the bottom half of the mask.
 
 This function is implemented in fingertip.py. 
 
-Fig. \ref{fig:finger} shows the results of the finger tip detection.
-This method detects the finger tip correctly when the gesture is one finger or two fingers.
-When the gesture is three fingers, the method sometimes detect the location between middle finger and other fingers.
-Table \ref{tb:finger} shows the result of detected finger tip when the gesture is 'three fingers'.
-We tried 143 frames of three fingers.
-The error ratio is 12 \%. Fig. \ref{fig:errorfinger} shows the examples of failure. As we can see, it fails when the hand is not on the canvas. This would cause about 10 pixels error in video image and cause about 20 pixels error in canvas. This is about 3\% of the average length of the canvas.
+Fig. \ref{fig:finger} shows the results of the fingertip detection.
+This method detects the finger tip correctly when the posture is one finger or two fingers.
+When the posture is a palm, the method sometimes detects the location between the middle finger and the other fingers.
+Table \ref{tb:finger} shows the result of the detected fingertip when the posture is 'palm'.
+We tried 143 frames of this posture.
+The error rate is 12 \%. Fig. \ref{fig:errorfinger} shows the examples of failure. As we can see, it fails when the hand is not on the canvas. This would cause an error of about 10 pixels in the input  image and 20 pixels on the output canvas, which is about 3\% of the average length of the canvas.
 
 \begin{figure}[htbp]
  \centering

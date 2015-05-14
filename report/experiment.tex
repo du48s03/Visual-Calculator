@@ -1,34 +1,32 @@
 \clearpage
 \section{Evaluation}
-For evaluation, we measure time, error rate and the consistency of each trials.
-If time is fast, it means the system is easy to operate.
-If the average error is low, it means the system is accurate.
-If time and average error does not change for every trial, it means the system is stable.
-\par
-We only evaluate about 'drawing' function because 'drawing' function is the most essential function of the system.
-We evaluate this system using three tasks. Fig. \ref{task} shows three examples.
-The flow of the evaluation is as follows. At first, there is a white canvas and pointer.
-When the tester press 'r', it shows the sample to trace and starts timer.
-User starts drawing and when he finish drawing, the tester press 'q' and timer ends.
-The user do same task three times.
-Time is measured by this timer. The average error is measured by the difference between the example and what he draw. The consistency is measured by the standard deviation of time and average error.
-\par
-To compare the results, we also tested the mouse as the input device. When we point a point in the canvas using a mouse, the pointer moves. When we drag with left click, it draws a line.\par
-We used user as both of our team member.
+We only evaluated the 'drawing' function because it is the most essential function of the system.
+We evaluated this system using three tasks. In each task, the user is asked to trace an example shown on the canvas. Fig. \ref{task} shows the three examples.
+The flow of the evaluation is as follows. At first, the user is shown a white canvas and the cursor. The user can draw on the canvas with the implemented method. 
+When the tester presses 'r', the sample to be traced by the user is shown and a timer is started.
+The user then starts drawing and when he or she finishes, the tester presses 'q' and stops the timer.
+Each tasks are repeated three times. The time and the error of each trial are recorded. The error is defined in the following subsection. 
+
+If the time is short, it means the system is easy to operate.
+If the error is low, it means the system is accurate.
+If the time and the error do not change much for every trial, it means the system is stable.
+\par  
+To compare the results, we also performed the same tests with the mouse as the input device. The cursor on the canvas follows the mouse, and the user can draw a line by moving the mouse while holding the left button. 
+
+The testees include both of our team members and a testee who is not familiar with the implementation of the system. 
 For this evaluation, I used evaluation.py, evaluation\_m.py, eval\_ui.py, mousepaint.py and evala.py.
-evala.py is the main function for measurement. eval\_ui.py and mouspaint.py make gui environment. evaluation.py and evaluation\_m.py is actual execution files.
-\subsection{The average error measurement}
+evala.py is the main function for measurement. eval\_ui.py and mouspaint.py make the gui environment. evaluation.py and evaluation\_m.py is the actual execution files.
+\subsection{The error measurement}
 \subsubsection{Points}
-We measure the distance between what the user draw and the nearest point of the sample.
-To make the measurement easy, we divide the canvas into 4 section.
-If a point the user draw is on upper left, we compare the distance with upper left point of the sample. Same as upper right, lower left and lower right.
+We measure the distances between what the user draws and the nearest point of the sample.
+To make the measurement easy, we divide the canvas into four parts.
+If a point drawn by the user is on the upperleft part, we compare the distance with the upperleft point of the sample. Same with the other three parts. The error is the average distance between the points drawn by the user and their corresponding example point. 
 \subsubsection{Circle}
-Circle is the points which distance from the center point are radius.
-We know the center point and the radius of the sample circle.
-Thus we measure the absolute difference between radius and the actual difference from the center point for each points. Then we average them.
+A circle is the collection of the points whose distances from the center point equals to the radius.
+We know the center point and the radius of the sample circle, so we can measure the absolute difference between the radius and the actual distance from the center point to each points drawn by the user. We then take the average of them as the error.
 \subsubsection{Line}
-We measure the distance between the actual line and sample line by comparing only 20 points of the lines. We equally sample 20 points in the lines along the vertical axis. And from the most highest points to the most lowest Points, we measure the difference of them.
-Fig.\ref{linem} shows the example. Blue line is a sample line and red line is user's line. The points are sample points. Each points are measured with the points which are connected by the black line.
+We measure the distance between the actual line and sample line by comparing only 20 points in the lines. We equally sample 20 points in the lines along the vertical axis. For each pair of the points in the two lines, we measure the distance between them, and take the average as the error. 
+Fig.\ref{linem} shows an example. The blue line is the sample line and the red line is the user's line. The points are sample points. Each distances are measured with the points which are connected by the black line.
 \begin{figure}
 \input{fig_task.tex}
  \caption{Three tasks}
@@ -44,7 +42,7 @@ Fig.\ref{linem} shows the example. Blue line is a sample line and red line is us
 
 
 \subsection{Results}
-Table \ref{tb:p2} shows the measurement results of the points task. Table \ref{tb:c1} and Table \ref{tb:c2} show the results of the circle task and the actual canvas image. Table \ref{tb:l1} and Table \ref{tb:l2} show the results of the line task and the actual canvas image. Table \ref{tb:exp} shows the standard deviation of them. In all tasks, mouse device results are better than our input device. Among three tasks, for our device performance is better in circle task. We can see the time deviation is better than the error deviation.
+Table \ref{tb:p2} shows the measurement results of the points task. Table \ref{tb:c1} and Table \ref{tb:c2} show the results of the circle task and the actual canvas image. Table \ref{tb:l1} and Table \ref{tb:l2} show the results of the line task and the actual canvas image. Table \ref{tb:exp} shows the standard deviation of them. In all the tasks, the mouse device results are better than ours. Among the three tasks, our device performance is the best in the circle task. We can see that the time deviation is smaller than the error deviation.
 
 \begin{table}[htbp]
  \centering

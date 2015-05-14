@@ -45,7 +45,7 @@ Also, we ignore the pixels outside of the canvas.
  \label{fig:handim2}
 \end{figure}
 
-If the arm is in the image, we may not classify the gesture correctly. Thus, we have to extract the hand region. We modified the method introduced by \cite{ra11}. The method is first to detect the skin region by color (and HSV), and then detect the wrist end. Wrist end is detected by the simple method as follows:
+To classify the posture of the hand, the arm is not necessary. Thus, we would like to extract the hand region. We modified the method introduced by \cite{ra11}. The method is first to detect the skin region by color (and HSV), and then detect the wrist end. Wrist end is detected by the simple method as follows:
 Fig.\ref{fig:handim} shows the image of the hand. 
 First, we calculate the number of the pixels on the four borders of the bounding box of the skin region: 
 up (between blue point and red point), 
@@ -55,14 +55,14 @@ Then we can assume the largest among these is the wrist side. This is because th
 
 Then, Raheja et al. detect the wrist end using intensity histogram. Intensity histogram is the sum of the number of the pixels on the row/cols. If wrist end is up/ down, it calculate along rows. Otherwise, it calculate along columns.
 
-Assume the wrist end is at the bottom. Let b be a point which is either on a left or right boundaries and the nearest from the bottom boundary.  \cite{ra11} found that the slope on the histogram between b and the wrist end is highest among the slopes between b and other points which is nearer to down than b. b is the point which is the most left or right point so it is always near the most widest region.
-\par
-However, the wrist detection does not work well because the paper assumes the hand gesture is a  spray hand and so the palm is always the widest. Like Fig.\ref{fig:handim} shows, we cannot find appropriate b because the leftmost and the rightmost points are not in the palm, but in the wrist and fingertip.
-This is because the arm is not pointing downward so it is difficult to detect the hand region as it is. 
-So we rotate the image along the axis so that we can assume the wrist is always 'up' side and the most left or right part tends to be in the palm region.
-In Fig.\ref{fig:handim} , the wrist can be detect by our method but not the previous method. This is because our method can detect the widest point as b. 
-We assume b is not too near to the wrist end. That is, if a point is within 30 pixels from the wrist end, use another point.
-Fig.\ref{fig:handim2} shows the example of the intensity histogram. Red point in the histogram corresponds to b's coordinate. Green point in the histogram corresponds to the wrist end's coordinate. The red line and green line in the left image corresponds to the b and wrist end.
+Assume the wrist end is at the bottom. Let b be the skin pixel that is either on the left border or the right border of the minimum bounding box, and is nearest to the wrist end. Since b is either the leftmost or the rightmost pixel, the intensity histogram at b's row tend to be close to the maximum. On the other hand, the wrist is usually thinner than the arm and the hand, so the intensity histogram at the wrist tends to be close to the minimum. Let $y_b$ be the $y$ coordinate of $b$(or the $x$ coordinate if the wrist end is on the left or right), and $hist(x)$ be the intensity histogram at row $x$ (or the column $x$ if the the wrist end is on the left or right). \cite{ra11} found that, $hist(x_b) - hist(x)/(x_b-x)$ tends to be the maxium when $x$ is at the wrist. 
+
+However, the wrist detection does not work well in the general case because the paper assumes that  the hand gesture is a  spray hand and so the palm is always the widest. Like Fig.\ref{fig:handim} shows, we cannot find the appropriate b because the leftmost and the rightmost points are not in the palm, but in the arm and fingertip.
+This is because the arm is not pointing downward and this makes it difficult to detect the hand region as it is. 
+So, we rotate the image along the major axis so that we can assume the wrist is always on the 'up' side and the most left or right part tends to be in the palm region.
+In Fig.\ref{fig:handim} , the wrist can be detect by our method but not the previous one, because our method can detect the widest point as b correctly. 
+We assume b is not too near to the wrist. That is, if a point is within 30 pixels from the wrist end, we use another point.
+Fig.\ref{fig:handim2} shows an example of the intensity histogram. The red point in the histogram corresponds to b's coordinate. The green point in the histogram corresponds to the wrist's coordinate. The red line and the green line in the left image corresponds to b and the wrist detected.
 
 Put together, our method is like follows.
 \begin{enumerate}
@@ -72,7 +72,7 @@ Put together, our method is like follows.
   \item Find wrist end and crop
 \end{enumerate}
 
-Even though we improve the method, in the case where the skin detection fails and the hand become smaller,  the palm can be too small to be the widest length. In that case, we simply extract 1/4 of all of the region.
+Even though we improved the method, in the case where the skin detection fails and the hand become smaller,  the palm can be too small to be the widest part. In that case, we simply extract 1/4 of all of the region.
 \subsection{Result}
 Fig.\ref{fig:hands} shows the results of the hand detection.
 As we can see, the hands are correctly detected.
