@@ -14,7 +14,7 @@ The user do same task three times.
 Time is measured by this timer. The average error is measured by the difference between the example and what he draw. The consistency is measured by the standard deviation of time and average error.
 \par
 To compare the results, we also tested the mouse as the input device. When we point a point in the canvas using a mouse, the pointer moves. When we drag with left click, it draws a line.\par
-We used user as both of our team member.
+We used three users. Two of them are our team member.
 For this evaluation, I used evaluation.py, evaluation\_m.py, eval\_ui.py, mousepaint.py and evala.py.
 evala.py is the main function for measurement. eval\_ui.py and mouspaint.py make gui environment. evaluation.py and evaluation\_m.py is actual execution files.
 \subsection{The average error measurement}
@@ -29,7 +29,7 @@ Thus we measure the absolute difference between radius and the actual difference
 \subsubsection{Line}
 We measure the distance between the actual line and sample line by comparing only 20 points of the lines. We equally sample 20 points in the lines along the vertical axis. And from the most highest points to the most lowest Points, we measure the difference of them.
 Fig.\ref{linem} shows the example. Blue line is a sample line and red line is user's line. The points are sample points. Each points are measured with the points which are connected by the black line.
-\begin{figure}
+\begin{figure}[htbp]
 \input{fig_task.tex}
  \caption{Three tasks}
  \label{task}
@@ -44,7 +44,24 @@ Fig.\ref{linem} shows the example. Blue line is a sample line and red line is us
 
 
 \subsection{Results}
-Table \ref{tb:p2} shows the measurement results of the points task. Table \ref{tb:c1} and Table \ref{tb:c2} show the results of the circle task and the actual canvas image. Table \ref{tb:l1} and Table \ref{tb:l2} show the results of the line task and the actual canvas image. Table \ref{tb:exp} shows the standard deviation of them. In all tasks, mouse device results are better than our input device. Among three tasks, for our device performance is better in circle task. We can see the time deviation is better than the error deviation.
+Table \ref{tb:p2} and \ref{tb:p1} shows the measurement results and the canvas images of the points task. Table \ref{tb:c1} and Table \ref{tb:c2} show the results of the circle task and the actual canvas image. Table \ref{tb:l1} and Table \ref{tb:l2} show the results of the line task and the actual canvas image. Table \ref{tb:exp} shows the standard deviation of them. 
+VI2 means the second trial for our input device. 
+In all tasks, mouse device results are better than our input device. 
+However, in circle and line task, the practice make better results.
+
+Among three tasks, for our device performance is better in circle task.
+Points task is difficult for our device. One reason is our device is not suitable for drawing a very short line. 
+Other reason is our device tends fail to detect touching correctly on the left side of the canvas.
+
+We can see the time deviation is better than the error deviation.
+This is because altough the task does not complete perfectly, they gave up and finish the task. For exapmle, Table \ref{tb:c1}'s user B's Trial 2 of VI.
+
+\begin{table}[htbp]
+ \centering
+ \caption{The result of the user study (points)}
+ \label{tb:p1}
+ \input{fig_exp_1_points.tex}
+\end{table}
 
 \begin{table}[htbp]
  \centering
